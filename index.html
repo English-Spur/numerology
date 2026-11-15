@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES Numerology Suite — Developed By Shovan Kapri</title>
+    <meta name="description" content="Ultimate Numerology Suite featuring Lo Shu Grid, Chaldean Name Calculator, Mobile Compatibility, and Full Cosmic Audit.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Noto+Sans+Bengali:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #0a2f1d;
+            --accent: #16a085;
+            --accent-light: #1abc9c;
+            --gold: #f5b301;
+            --bg-start: #050b08;
+            --bg-end: #0f1f18;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(22, 160, 133, 0.25);
+            --text-primary: #e8f0ec;
+            --text-secondary: #a8c3b5;
+            --text-light: #6b8a7a;
+            --radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Bengali', sans-serif;
+            background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== COSMIC BACKGROUND ===== */
+        #cosmic-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-orb.one {
+            width: 400px; height: 400px;
+            background: rgba(22, 160, 133, 0.25);
+            top: -100px; right: -100px;
+            animation: floatOrb 14s infinite alternate ease-in-out;
+        }
+        .glow-orb.two {
+            width: 500px; height: 500px;
+            background: rgba(245, 179, 1, 0.10);
+            bottom: -200px; left: -150px;
+            animation: floatOrb 18s infinite alternate-reverse ease-in-out;
+        }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 40px) scale(1.15); }
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 11, 8, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(22, 160, 133, 0.15);
+            padding: 16px 24px;
+        }
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+        .brand-icon {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 0 20px rgba(22, 160, 133, 0.5);
+        }
+        .brand-text {
+            background: linear-gradient(135deg, #ffffff, var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-badge {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(22, 160, 133, 0.12);
+            border: 1px solid rgba(22, 160, 133, 0.3);
+            color: var(--accent-light);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 80px 24px 50px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .hero .zodiac-ring {
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: spinZodiac 20s linear infinite;
+            filter: drop-shadow(0 0 25px rgba(22, 160, 133, 0.6));
+        }
+        @keyframes spinZodiac {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-light) 45%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p.subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-item .stat-num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent-light);
+        }
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+        }
+
+        /* ===== TOOLS GRID ===== */
+        .tools-section {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 30px 24px 80px;
+        }
+        .section-heading {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+        .section-heading h2 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+        .section-heading p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .tool-card {
+            position: relative;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 30px 26px;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 260px;
+        }
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .tool-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(22, 160, 133, 0.55);
+            background: rgba(22, 160, 133, 0.08);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(22, 160, 133, 0.15);
+        }
+        .tool-card:hover::before { opacity: 1; }
+
+        /* Icon Fix: Flex & Emojis for absolute reliability */
+        .card-icon-wrap {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            color: #fff;
+        }
+        .tool-card:hover .card-icon-wrap {
+            transform: scale(1.08) rotate(-4deg);
+        }
+        
+        .icon-green { background: linear-gradient(135deg, #0e623b, #16a085); box-shadow: 0 8px 20px rgba(22, 160, 133, 0.3); }
+        .icon-blue { background: linear-gradient(135deg, #1a237e, #3f51b5); box-shadow: 0 8px 20px rgba(63, 81, 181, 0.3); }
+        .icon-orange { background: linear-gradient(135deg, #bf360c, #ef6c00); box-shadow: 0 8px 20px rgba(239, 108, 0, 0.3); }
+        .icon-purple { background: linear-gradient(135deg, #4a148c, #7b1fa2); box-shadow: 0 8px 20px rgba(123, 31, 162, 0.3); }
+        .icon-gold { background: linear-gradient(135deg, #8d6e00, #f5b301); color: #1a140a; box-shadow: 0 8px 20px rgba(245, 179, 1, 0.3); }
+
+        .tool-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+            color: #fff;
+            padding-right: 70px; /* Prevents overlap with badge */
+        }
+        .tool-card p {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-weight: 300;
+            flex: 1; /* Pushes CTA to bottom */
+            margin-bottom: 20px;
+        }
+        .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-light);
+            letter-spacing: 0.3px;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+        .tool-card:hover .card-cta {
+            gap: 14px;
+            color: var(--gold);
+        }
+
+        /* Badge on card */
+        .card-badge {
+            position: absolute;
+            top: 20px; right: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(245, 179, 1, 0.12);
+            color: var(--gold);
+            border: 1px solid rgba(245, 179, 1, 0.35);
+            z-index: 2;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid rgba(22, 160, 133, 0.15);
+            background: rgba(5, 11, 8, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 40px 24px 30px;
+            text-align: center;
+        }
+        .footer-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+        .footer-brand-icon {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .footer-dev {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+        .footer-dev strong {
+            color: var(--accent-light);
+            font-weight: 700;
+            letter-spacing: 0.4px;
+        }
+        .footer-contact {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        .footer-contact a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .footer-contact a:hover { text-decoration: underline; }
+        .footer-bottom {
+            font-size: 12px;
+            color: var(--text-light);
+            border-top: 1px solid rgba(22, 160, 133, 0.1);
+            padding-top: 18px;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ================= FULL MOBILE RESPONSIVE FIXES ================= */
+        @media (max-width: 768px) {
+            .navbar { padding: 12px 16px; }
+            .brand { font-size: 17px; }
+            .nav-badge { display: none; }
+            
+            .hero { padding: 50px 16px 30px; }
+            .hero .zodiac-ring { font-size: 60px; margin-bottom: 15px; }
+            .hero p.subtitle { font-size: 0.9rem; line-height: 1.6; }
+            
+            .hero-stats { gap: 20px; }
+            .stat-item .stat-num { font-size: 24px; }
+            .stat-item .stat-label { font-size: 10px; }
+
+            .tools-section { padding: 20px 16px 60px; }
+            .section-heading { margin-bottom: 30px; }
+            
+            .tools-grid {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 16px;
+            }
+            .tool-card {
+                padding: 24px 20px;
+                min-height: auto;
+            }
+            .card-icon-wrap {
+                width: 50px; height: 50px;
+                font-size: 22px;
+                margin-bottom: 16px;
+            }
+            .tool-card h3 { font-size: 17px; padding-right: 60px; }
+            .tool-card p { font-size: 13px; line-height: 1.6; }
+            
+            .card-badge {
+                top: 16px; right: 16px;
+                font-size: 9px;
+                padding: 3px 8px;
+            }
+
+            footer { padding: 30px 16px 20px; }
+            .footer-brand { font-size: 16px; }
+            .footer-contact { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cosmic background -->
+    <canvas id="cosmic-canvas"></canvas>
+    <div class="glow-orb one"></div>
+    <div class="glow-orb two"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="brand">
+                <div class="brand-icon">🔮</div>
+                <span class="brand-text">ES Numerology Suite</span>
+            </div>
+            <span class="nav-badge">✦ Chaldean &amp; Lo Shu Mastery</span>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="zodiac-ring">🌟</div>
+        <h1>The Ultimate Numerology<br>Cosmic Toolkit</h1>
+        <p class="subtitle">
+            পেশাদার সংখ্যাতত্ত্বের সম্পূর্ণ সংগ্রহ — Lo Shu গ্রিড, চালডিয়ান নাম গণনা, মোবাইল কম্প্যাটিবিলিটি এবং সম্পূর্ণ ভাগ্য অডিট। সব এক জায়গায়।
+        </p>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-num">5</div>
+                <div class="stat-label">Pro Tools</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">Chaldean</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">∞</div>
+                <div class="stat-label">Vibrations</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TOOLS GRID -->
+    <section class="tools-section">
+        <div class="section-heading reveal">
+            <h2>Explore All Numerology Tools</h2>
+            <p>নিচের যেকোনো টুলে ক্লিক করে আপনার ভাগ্য বিশ্লেষণ শুরু করুন</p>
+        </div>
+
+        <div class="tools-grid">
+
+            <!-- Card 1: Complete Guide -->
+            <a href="Numerology Complete Guide.html" class="tool-card reveal">
+                <span class="card-badge">Premium</span>
+                <!-- Emoji fallback ensures icon is never missing -->
+                <div class="card-icon-wrap icon-green">
+                    📘
+                </div>
+                <h3>Complete Numerology Guide</h3>
+                <p>সম্পূর্ণ Cosmic Audit — Lo Shu গ্রিড, নাম সংশোধন, সংখ্যাধিক্য বিশ্লেষণ, রাশিচক্র, ক্যারিয়ার, স্বাস্থ্য এবং জীবনচক্রের ৯৯.৯৯% নির্ভুল রিপোর্ট।</p>
+                <span class="card-cta">Open Master Audit <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <!-- Card 2: Lo Shu Grid -->
+            <a href="loshugrid.html" class="tool-card reveal">
+                <div class="card-icon-wrap icon-blue">
+                    🔢
+                </div>
+                <h3>Lo Shu &amp; Kua Calculator</h3>
+                <p>Driver, Conductor ও Kua নম্বর সহ পূর্ণাঙ্গ Lo Shu 3×3 ম্যাজিক স্কয়ার বিশ্লেষণ। উপস্থিত-অনুপস্থিত সংখ্যা এবং সম্পূর্ণ হওয়া যোগসমূহের বিস্তারিত রিপোর্ট।</p>
+                <span class="card-cta">Calculate Grid <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <!-- Card 3: Mobile Numerology -->
+            <a href="Mobile Numerology Calculator.html" class="tool-card reveal">
+                <div class="card-icon-wrap icon-orange">
+                    📱
+                </div>
+                <h3>Mobile Number Compatibility</h3>
+                <p>আপনার ১০-সংখ্যার মোবাইল নম্বর আপনার জন্মতারিখের Mulank ও Bhagyank-এর সাথে সামঞ্জস্যপূর্ণ কিনা তা যাচাই করুন Instant Vibration Analysis-এর মাধ্যমে।</p>
+                <span class="card-cta">Check Compatibility <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <!-- Card 4: Multi-Tasking Suite -->
+            <a href="Multi-Tasking Numerology Suite.html" class="tool-card reveal">
+                <span class="card-badge">All-in-One</span>
+                <div class="card-icon-wrap icon-purple">
+                    🧩
+                </div>
+                <h3>Multi-Tasking Numerology Suite</h3>
+                <p>নাম বিশ্লেষণ, ক্যারিয়ার গাইডেন্স এবং মোবাইল কম্প্যাটিবিলিটি — সব একটি প্রিমিয়াম অ্যাপে। Friendly/Enemy frequencies এবং Best/Avoid fields একসাথে।</p>
+                <span class="card-cta">Launch Suite <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <!-- Card 5: Name Calculator -->
+            <a href="Name Numerology Calculator.html" class="tool-card reveal">
+                <div class="card-icon-wrap icon-gold">
+                    ✍️
+                </div>
+                <h3>Name Numerology Calculator</h3>
+                <p>Authentic Chaldean পদ্ধতিতে আপনার নামের প্রতিটি অক্ষরের মানসহ Compound Number ও Single Digit Destiny Number হিসাব করুন বিস্তারিত ব্যাখ্যা সহ।</p>
+                <span class="card-cta">Calculate Name Number <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-brand">
+            <div class="footer-brand-icon">🔮</div>
+            <span class="brand-text">ES Numerology Suite</span>
+        </div>
+        <p class="footer-dev">Developed By <strong>Shovan Kapri</strong></p>
+        <p class="footer-contact">
+            For Consultation Contact: <a href="tel:9875340842">9875340842</a> / <a href="tel:8158874131">8158874131</a>
+        </p>
+        <div class="footer-bottom">
+            © <span id="year"></span> ES Numerology Suite · 100% Indian Chaldean System · All Rights Reserved
+        </div>
+    </footer>
+
+    <script>
+        // Auto year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ===== COSMIC CANVAS PARTICLES =====
+        const canvas = document.getElementById('cosmic-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.2 + 0.4;
+                this.speedX = Math.random() * 0.25 - 0.125;
+                this.speedY = Math.random() * 0.25 - 0.125;
+                this.hue = Math.random() > 0.5 ? 165 : 45;
+                this.opacity = Math.random() * 0.35 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = `hsla(${this.hue}, 75%, 60%, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // ===== SCROLL REVEAL =====
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), index * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

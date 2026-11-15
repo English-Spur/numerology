@@ -1,0 +1,2368 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES Ultimate Numerology OS By Shovan Kapri</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Noto+Sans+Bengali:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #0a2f1d;
+            --primary-light: #1a4d2e;
+            --accent: #16a085;
+            --accent-light: #1abc9c;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --bg-start: #0a0f0d;
+            --bg-end: #1a2a1f;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-border: rgba(255, 255, 255, 0.18);
+            --text-primary: #1b3a24;
+            --text-secondary: #3d5a4a;
+            --text-light: #7a9a87;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-bn: 'Noto Sans Bengali', sans-serif;
+            --font-en: 'Inter', sans-serif;
+        }
+
+        /* Theme 1: Emerald (Default) */
+        .theme-emerald {
+            --primary: #0a2f1d;
+            --primary-light: #1a4d2e;
+            --accent: #16a085;
+            --accent-light: #1abc9c;
+            --bg-start: #0a0f0d;
+            --bg-end: #1a2a1f;
+        }
+
+        /* Theme 2: Royal Sapphire */
+        .theme-sapphire {
+            --primary: #1a237e;
+            --primary-light: #283593;
+            --accent: #3f51b5;
+            --accent-light: #5c6bc0;
+            --bg-start: #0a0a1a;
+            --bg-end: #1a1a3a;
+        }
+
+        /* Theme 3: Crimson Passion */
+        .theme-crimson {
+            --primary: #6a1b1b;
+            --primary-light: #8e1a1a;
+            --accent: #c62828;
+            --accent-light: #e53935;
+            --bg-start: #1a0a0a;
+            --bg-end: #3a1a1a;
+        }
+
+        /* Theme 4: Golden Amber */
+        .theme-amber {
+            --primary: #6d4c00;
+            --primary-light: #8d6e00;
+            --accent: #f9a825;
+            --accent-light: #fdd835;
+            --bg-start: #1a140a;
+            --bg-end: #3a2a1a;
+        }
+
+        /* Theme 5: Purple Reign */
+        .theme-purple {
+            --primary: #4a148c;
+            --primary-light: #6a1b9a;
+            --accent: #7b1fa2;
+            --accent-light: #9c27b0;
+            --bg-start: #0a0a1a;
+            --bg-end: #2a1a3a;
+        }
+
+        /* Theme 6: Ocean Teal */
+        .theme-ocean {
+            --primary: #004d40;
+            --primary-light: #00695c;
+            --accent: #00897b;
+            --accent-light: #26a69a;
+            --bg-start: #0a0f0d;
+            --bg-end: #0a1a1a;
+        }
+
+        /* Theme 7: Sunrise Orange */
+        .theme-sunrise {
+            --primary: #bf360c;
+            --primary-light: #d84315;
+            --accent: #ef6c00;
+            --accent-light: #ff8f00;
+            --bg-start: #1a0a00;
+            --bg-end: #3a1a0a;
+        }
+
+        /* Theme 8: Midnight Blue */
+        .theme-midnight {
+            --primary: #0d1b2a;
+            --primary-light: #1b2a4a;
+            --accent: #1b4a6a;
+            --accent-light: #2a6a8a;
+            --bg-start: #050a15;
+            --bg-end: #0a1a2a;
+        }
+
+        /* Theme 9: Rose Gold */
+        .theme-rose {
+            --primary: #5c1a3a;
+            --primary-light: #7a2a4a;
+            --accent: #a84a6a;
+            --accent-light: #c86a8a;
+            --bg-start: #1a0a15;
+            --bg-end: #3a1a2a;
+        }
+
+        /* Theme 10: Forest */
+        .theme-forest {
+            --primary: #1a3a1a;
+            --primary-light: #2a5a2a;
+            --accent: #3a7a3a;
+            --accent-light: #5a9a5a;
+            --bg-start: #0a150a;
+            --bg-end: #1a2a1a;
+        }
+
+        /* Dark Theme Override */
+        body.dark-theme {
+            --bg-start: #0a0f0d;
+            --bg-end: #1a2a1f;
+            --card-bg: rgba(18, 30, 22, 0.92);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #e8f0ec;
+            --text-secondary: #b0c8bb;
+            --text-light: #7a9a87;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-en), var(--font-bn);
+            background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== COSMIC BACKGROUND ===== */
+        #cosmic-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        #zodiac-backdrop {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            font-size: 30vw;
+            color: rgba(22, 160, 133, 0.04);
+            z-index: 0;
+            font-weight: 900;
+            pointer-events: none;
+            user-select: none;
+            animation: pulseZodiac 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseZodiac {
+            0% { opacity: 0.2; transform: translate(-50%, -50%) scale(0.7) rotate(-5deg); }
+            100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.85) rotate(8deg); }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 40px 45px;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+            transition: var(--transition);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ===== PASSWORD LOCK SCREEN ===== */
+        #passwordOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0f0d, #1a2a1f);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        #passwordOverlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.05);
+        }
+
+        #passwordOverlay .lock-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: pulseLock 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseLock {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        #passwordOverlay h2 {
+            color: #e8f0ec;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        #passwordOverlay p {
+            color: #7a9a87;
+            font-size: 16px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        #passwordOverlay .lock-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px 50px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+        }
+
+        #passwordOverlay .lock-box input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.06);
+            color: #e8f0ec;
+            font-size: 18px;
+            outline: none;
+            transition: var(--transition);
+            font-family: var(--font-en);
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        #passwordOverlay .lock-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        #passwordOverlay .lock-box input::placeholder {
+            color: #4a6a5a;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        #passwordOverlay .lock-box .error-msg {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 12px;
+            min-height: 24px;
+            font-weight: 500;
+        }
+
+        #passwordOverlay .lock-box button {
+            margin-top: 20px;
+            padding: 14px 40px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 15px rgba(10, 47, 29, 0.3);
+            font-family: var(--font-en);
+            width: 100%;
+            letter-spacing: 1px;
+        }
+
+        #passwordOverlay .lock-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(10, 47, 29, 0.4);
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+        }
+
+        #passwordOverlay .lock-box .hint {
+            color: #4a6a5a;
+            font-size: 13px;
+            margin-top: 15px;
+            font-weight: 300;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            padding-bottom: 25px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-light);
+            border-radius: 10px;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== INPUT BOX ===== */
+        .input-box {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            background: rgba(22, 160, 133, 0.06);
+            padding: 28px 32px;
+            border-radius: 16px;
+            border: 1px solid rgba(22, 160, 133, 0.15);
+            margin-bottom: 40px;
+            backdrop-filter: blur(4px);
+            transition: var(--transition);
+        }
+
+        .input-box:hover {
+            border-color: rgba(22, 160, 133, 0.3);
+            box-shadow: 0 8px 25px rgba(22, 160, 133, 0.08);
+        }
+
+        .input-box input,
+        .input-box select {
+            padding: 14px 22px;
+            border-radius: 12px;
+            border: 2px solid rgba(22, 160, 133, 0.15);
+            font-size: 15px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            color: var(--text-primary);
+            transition: var(--transition);
+            font-family: var(--font-en);
+            min-width: 180px;
+        }
+
+        .input-box input:focus,
+        .input-box select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.12);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .input-box input::placeholder {
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        .input-box button {
+            padding: 14px 32px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 15px rgba(10, 47, 29, 0.25);
+            font-family: var(--font-en);
+            letter-spacing: 0.3px;
+        }
+
+        .input-box button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(10, 47, 29, 0.35);
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+        }
+
+        .input-box button:active {
+            transform: translateY(0px);
+        }
+
+        .action-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .pdf-btn {
+            background: linear-gradient(135deg, #c0392b, #e74c3c) !important;
+            box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3) !important;
+        }
+
+        .pdf-btn:hover {
+            background: linear-gradient(135deg, #a93226, #c0392b) !important;
+            box-shadow: 0 8px 25px rgba(192, 57, 43, 0.4) !important;
+        }
+
+        /* ===== DASHBOARD GRID ===== */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 35px;
+            margin-bottom: 40px;
+        }
+
+        @media(max-width: 920px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            .container {
+                padding: 25px 20px;
+            }
+            .input-box {
+                padding: 20px;
+            }
+        }
+
+        .grid-wrapper {
+            background: linear-gradient(145deg, #0f301e, #1a402a);
+            padding: 28px;
+            border-radius: 18px;
+            border: 2px solid var(--accent);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .grid-wrapper:hover {
+            border-color: var(--accent-light);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(22, 160, 133, 0.1);
+        }
+
+        .loshu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .cell {
+            background: rgba(255, 255, 255, 0.95);
+            aspect-ratio: 1.1;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cell:hover {
+            transform: scale(1.04) translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent);
+        }
+
+        .cell .fixed-num {
+            position: absolute;
+            bottom: 6px;
+            right: 10px;
+            font-size: 12px;
+            color: #8bbfa6;
+            font-weight: 600;
+        }
+
+        .cell .user-num {
+            color: var(--accent);
+            letter-spacing: 2px;
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        /* ===== METRIC CARD ===== */
+        .metric-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            padding: 28px 30px;
+            border-radius: 18px;
+            border: 1px solid rgba(22, 160, 133, 0.12);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+        }
+
+        .metric-card:hover {
+            border-color: rgba(22, 160, 133, 0.25);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric-card h3 {
+            margin-top: 0;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 14px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.2px;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(22, 160, 133, 0.15);
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .metric-item:last-child {
+            border: none;
+        }
+
+        .metric-item strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .lucky-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #e6f7ef, #d0ebe0);
+            color: #0e623b;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 45px;
+            border-left: 5px solid var(--accent);
+            letter-spacing: -0.2px;
+            box-shadow: 0 4px 15px rgba(10, 47, 29, 0.2);
+        }
+
+        /* ===== REPORT BLOCK ===== */
+        .report-block {
+            margin: 25px 0;
+            padding: 28px 30px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(22, 160, 133, 0.08);
+            border-left: 6px solid var(--accent);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            animation: slideUp 0.5s ease-out;
+            transition: var(--transition);
+        }
+
+        .report-block:hover {
+            border-color: rgba(22, 160, 133, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .report-block h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .lang-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+
+        @media(max-width: 768px) {
+            .lang-split {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .section-title {
+                font-size: 17px;
+                padding: 12px 20px;
+            }
+            .header h1 {
+                font-size: 26px;
+            }
+        }
+
+        .bn-text {
+            color: var(--text-primary);
+            text-align: justify;
+            font-family: var(--font-bn);
+            line-height: 1.9;
+        }
+
+        .en-text {
+            color: var(--text-secondary);
+            font-style: italic;
+            border-left: 3px solid rgba(22, 160, 133, 0.2);
+            padding-left: 18px;
+            text-align: justify;
+            font-size: 14.5px;
+            line-height: 1.8;
+        }
+
+        /* ===== CHALDEAN TABLE - HORIZONTAL LAYOUT ===== */
+        .chaldean-breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(22, 160, 133, 0.1);
+        }
+
+        .chaldean-breakdown-table th {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #ffffff;
+            font-weight: 700;
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        .chaldean-breakdown-table td {
+            padding: 12px 16px;
+            text-align: center;
+            border: 1px solid rgba(22, 160, 133, 0.08);
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .chaldean-breakdown-table tr:nth-child(even) {
+            background: rgba(22, 160, 133, 0.04);
+        }
+
+        .chaldean-breakdown-table tr:hover {
+            background: rgba(22, 160, 133, 0.08);
+        }
+
+        /* Horizontal layout for Chaldean table - letters in columns */
+        .chaldean-table-horizontal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 20px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(22, 160, 133, 0.1);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chaldean-table-horizontal .letter-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(22, 160, 133, 0.08);
+        }
+
+        .chaldean-table-horizontal .letter-item .letter {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .chaldean-table-horizontal .letter-item .value {
+            color: var(--accent);
+            font-weight: 700;
+            background: rgba(22, 160, 133, 0.08);
+            padding: 0 8px;
+            border-radius: 4px;
+        }
+
+        .chaldean-table-horizontal .letter-item .arrow {
+            color: var(--text-light);
+            font-weight: 300;
+            margin: 0 2px;
+        }
+
+        .chaldean-table-horizontal .letter-item .equals {
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        /* ===== FRIEND/ENEMY NUMBER DISPLAY ===== */
+        .friend-enemy-box {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(22, 160, 133, 0.1);
+            margin: 10px 0;
+        }
+        .friend-enemy-box .friend-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .friend-enemy-box .enemy-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .friend-enemy-box .label {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .friend-enemy-box .friend-badge {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .friend-enemy-box .enemy-badge {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: white;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .friend-enemy-box .neutral-badge {
+            background: linear-gradient(135deg, #f39c12, #f1c40f);
+            color: white;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .friend-enemy-box .num-chip {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        /* ===== DROPDOWN ===== */
+        .chaldean-dropdown {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(22, 160, 133, 0.12);
+            border-radius: 12px;
+            margin: 18px 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .chaldean-dropdown-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            padding: 14px 22px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 15px;
+            border: none;
+            width: 100%;
+            text-align: left;
+            transition: var(--transition);
+            font-family: var(--font-en);
+            letter-spacing: 0.2px;
+        }
+
+        .chaldean-dropdown-header:hover {
+            background: linear-gradient(135deg, var(--primary-light), #2a5a3a);
+        }
+
+        .chaldean-dropdown-body {
+            padding: 0 22px 22px 22px;
+            display: none;
+        }
+
+        .chaldean-dropdown-body.open {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== TOGGLE BUTTON ===== */
+        .toggle-btn {
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+            color: #fff;
+            width: 100%;
+            text-align: left;
+            padding: 16px 28px;
+            font-size: 17px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(22, 160, 133, 0.25);
+            transition: var(--transition);
+            font-family: var(--font-en);
+            letter-spacing: 0.2px;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(22, 160, 133, 0.35);
+            background: linear-gradient(135deg, #117a65, #16a085);
+        }
+
+        .explanation-box {
+            display: none;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(4px);
+            border: 2px solid rgba(22, 160, 133, 0.1);
+            border-top: none;
+            border-radius: 0 0 14px 14px;
+            padding: 30px;
+            margin-top: -5px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* ===== NUMBER BADGE ===== */
+        .number-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 800;
+            margin-right: 10px;
+        }
+
+        /* ===== VIBE METER ===== */
+        .highlight-box {
+            background: linear-gradient(135deg, #fef9e7, #fdf2e9);
+            border: 2px solid var(--warning);
+            border-radius: 14px;
+            padding: 22px 24px;
+            margin: 16px 0;
+            transition: var(--transition);
+        }
+
+        .highlight-box:hover {
+            box-shadow: 0 4px 20px rgba(243, 156, 18, 0.12);
+        }
+
+        .vibe-meter {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 10px 0;
+        }
+
+        .vibe-bar {
+            flex: 1;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .vibe-bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .vibe-bar-fill.good {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+        .vibe-bar-fill.warning {
+            background: linear-gradient(90deg, #f39c12, #f1c40f);
+        }
+        .vibe-bar-fill.danger {
+            background: linear-gradient(90deg, #c0392b, #e74c3c);
+        }
+
+        /* ===== THEME TOGGLE & SELECTOR (UPDATED TO HORIZONTAL HEADER BAR) ===== */
+        .theme-control-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .theme-toggle {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        .theme-selector-container {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .theme-dot:hover {
+            transform: scale(1.2);
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .theme-dot.active {
+            border-color: var(--primary);
+            transform: scale(1.15);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-dot .tooltip {
+            position: absolute;
+            bottom: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .theme-dot:hover .tooltip {
+            opacity: 1;
+        }
+
+        .theme-dot.emerald { background: linear-gradient(135deg, #0a2f1d, #16a085); }
+        .theme-dot.sapphire { background: linear-gradient(135deg, #1a237e, #3f51b5); }
+        .theme-dot.crimson { background: linear-gradient(135deg, #6a1b1b, #c62828); }
+        .theme-dot.amber { background: linear-gradient(135deg, #6d4c00, #f9a825); }
+        .theme-dot.purple { background: linear-gradient(135deg, #4a148c, #7b1fa2); }
+        .theme-dot.ocean { background: linear-gradient(135deg, #004d40, #00897b); }
+        .theme-dot.sunrise { background: linear-gradient(135deg, #bf360c, #ef6c00); }
+        .theme-dot.midnight { background: linear-gradient(135deg, #0d1b2a, #1b4a6a); }
+        .theme-dot.rose { background: linear-gradient(135deg, #5c1a3a, #a84a6a); }
+        .theme-dot.forest { background: linear-gradient(135deg, #1a3a1a, #3a7a3a); }
+
+        /* ===== PRINT FOOTER ===== */
+        .print-footer {
+            display: none;
+        }
+
+        /* ===== PRINT STYLES - FIXED FOR PROPER PAGE BREAKS & FOOTER ===== */
+        @media print {
+            @page {
+                size: A4;
+                margin: 12mm 12mm 18mm 12mm;
+            }
+
+            /* Reset all print styles */
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-size: 12px !important;
+            }
+
+            /* Hide non-printable elements */
+            #cosmic-canvas,
+            #zodiac-backdrop,
+            .input-box,
+            .toggle-btn,
+            .explanation-box,
+            .action-container,
+            .theme-control-bar,
+            .chaldean-dropdown-header,
+            #passwordOverlay {
+                display: none !important;
+            }
+
+            /* Main container */
+            .container {
+                max-width: 100% !important;
+                padding: 10px 15px !important;
+                margin: 0 !important;
+                background: #ffffff !important;
+                box-shadow: none !important;
+                border: none !important;
+                backdrop-filter: none !important;
+                border-radius: 0 !important;
+            }
+
+            /* Header */
+            .header {
+                border-bottom: 2px solid #16a085 !important;
+                padding-bottom: 10px !important;
+                margin-bottom: 15px !important;
+            }
+            .header h1 {
+                font-size: 22px !important;
+                color: #0a2f1d !important;
+                -webkit-text-fill-color: #0a2f1d !important;
+                background: none !important;
+            }
+            .header p {
+                font-size: 12px !important;
+                color: #3d5a4a !important;
+            }
+
+            /* Print Footer fixed to bottom of EVERY page */
+            .print-footer {
+                display: block !important;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                font-size: 10px !important;
+                color: #555 !important;
+                border-top: 1px solid #16a085;
+                padding-top: 5px;
+                background: #fff;
+            }
+
+            /* Dashboard */
+            .dashboard {
+                display: grid !important;
+                grid-template-columns: 1fr 1.2fr !important;
+                gap: 20px !important;
+                margin-bottom: 15px !important;
+                page-break-inside: avoid !important;
+            }
+
+            .grid-wrapper {
+                background: #eef7f2 !important;
+                border: 2px solid #16a085 !important;
+                padding: 15px !important;
+                box-shadow: none !important;
+            }
+
+            .cell {
+                border: 1px solid #333 !important;
+                background: #ffffff !important;
+                box-shadow: none !important;
+            }
+            .cell .user-num {
+                color: #0a2f1d !important;
+            }
+            .cell .fixed-num {
+                color: #666 !important;
+            }
+
+            .metric-card {
+                background: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+                box-shadow: none !important;
+                padding: 15px !important;
+            }
+            .metric-card h3 {
+                color: #0a2f1d !important;
+                border-bottom-color: #16a085 !important;
+            }
+            .metric-item {
+                border-bottom-color: #ddd !important;
+                color: #333 !important;
+                padding: 6px 0 !important;
+                font-size: 12px !important;
+            }
+            .metric-item strong {
+                color: #0a2f1d !important;
+            }
+            .lucky-badge {
+                background: #e6f7ef !important;
+                color: #0e623b !important;
+            }
+
+            /* Section Titles */
+            .section-title {
+                background: #0a2f1d !important;
+                color: #ffffff !important;
+                padding: 8px 15px !important;
+                font-size: 14px !important;
+                margin-top: 20px !important;
+                margin-bottom: 10px !important;
+                border-left: 5px solid #16a085 !important;
+                border-radius: 4px !important;
+                page-break-after: avoid !important;
+            }
+
+            /* Report Blocks - Force page breaks between major sections */
+            .report-block {
+                background: #ffffff !important;
+                border: 1px solid #ddd !important;
+                border-left: 5px solid #16a085 !important;
+                box-shadow: none !important;
+                margin: 10px 0 !important;
+                padding: 14px 18px !important;
+                page-break-inside: avoid !important;
+            }
+
+            /* Force page breaks after specific sections */
+            #repetitionAnalyticsContainer .report-block:last-child {
+                page-break-after: always !important;
+            }
+            
+            #zodiacContainer {
+                page-break-before: auto !important;
+            }
+
+            #driverDeepContainer {
+                page-break-before: auto !important;
+            }
+
+            #riskOpportunitiesContainer {
+                page-break-before: auto !important;
+            }
+
+            #healthContainer {
+                page-break-before: auto !important;
+            }
+
+            #lifeCalculationContainer {
+                page-break-before: auto !important;
+            }
+
+            #planesContainer {
+                page-break-before: auto !important;
+            }
+
+            /* Chaldean dropdown - force open in print */
+            .chaldean-dropdown {
+                border: 1px solid #ddd !important;
+                background: #f9f9f9 !important;
+                margin: 10px 0 !important;
+            }
+            .chaldean-dropdown-body {
+                display: block !important;
+                padding: 10px 15px !important;
+            }
+            
+            /* Horizontal Chaldean table in print */
+            .chaldean-table-horizontal {
+                background: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+                padding: 10px 12px !important;
+            }
+            .chaldean-table-horizontal .letter-item {
+                background: #ffffff !important;
+                border: 1px solid #ddd !important;
+            }
+            .chaldean-table-horizontal .letter-item .letter {
+                color: #0a2f1d !important;
+            }
+            .chaldean-table-horizontal .letter-item .value {
+                color: #16a085 !important;
+                background: rgba(22, 160, 133, 0.08) !important;
+            }
+
+            .chaldean-breakdown-table {
+                border: 1px solid #ddd !important;
+                background: #ffffff !important;
+            }
+            .chaldean-breakdown-table th {
+                background: #0a2f1d !important;
+                color: #ffffff !important;
+                padding: 6px 10px !important;
+                font-size: 11px !important;
+            }
+            .chaldean-breakdown-table td {
+                border: 1px solid #ddd !important;
+                padding: 6px 10px !important;
+                font-size: 11px !important;
+                color: #000 !important;
+            }
+            .chaldean-breakdown-table tr:nth-child(even) {
+                background: #f5f5f5 !important;
+            }
+
+            /* Friend/Enemy box in print */
+            .friend-enemy-box {
+                background: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+            }
+            .friend-enemy-box .num-chip {
+                background: #ffffff !important;
+                border: 1px solid #ddd !important;
+            }
+
+            /* Vibe meter */
+            .highlight-box {
+                background: #fef9e7 !important;
+                border: 1px solid #f39c12 !important;
+                padding: 12px 15px !important;
+                margin: 10px 0 !important;
+            }
+
+            /* Number badge */
+            .number-badge {
+                background: #0a2f1d !important;
+                color: #ffffff !important;
+            }
+
+            /* Lang split */
+            .lang-split {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 15px !important;
+            }
+            .bn-text {
+                color: #000 !important;
+            }
+            .en-text {
+                color: #444 !important;
+                border-left-color: #ddd !important;
+            }
+
+            /* Special alerts */
+            #specialAlertsContainer .report-block {
+                border-left-color: #9b59b6 !important;
+                background: #faf5ff !important;
+            }
+
+            /* Ensure dashboard view is visible */
+            #dashboardView {
+                display: block !important;
+            }
+
+            /* Hide download PDF button in print */
+            #downloadPdfBtn {
+                display: none !important;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-light);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== PASSWORD OVERLAY ===== -->
+    <div id="passwordOverlay">
+        <div class="lock-box">
+            <div class="lock-icon">🔐</div>
+            <h2>🔮 ES Numerology Suite</h2>
+            <p>Enter password to access the cosmic audit</p>
+            <input type="password" id="passwordInput" placeholder="••••••••" maxlength="20" autofocus>
+            <div class="error-msg" id="passwordError"></div>
+            <button onclick="verifyPassword()">✦ Unlock Portal ✦</button>
+            <div class="hint">🔑 Default: <strong>******</strong></div>
+        </div>
+    </div>
+
+    <!-- ===== COSMIC BACKGROUND ===== -->
+    <canvas id="cosmic-canvas"></canvas>
+    <div id="zodiac-backdrop">🌟</div>
+
+    <!-- ===== MAIN CONTAINER ===== -->
+    <div class="container" id="mainContainer" style="display:none;">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🌌 ES Professional Numerology Suite V1.0</h1>
+            <p>Numerology Consultation Engine • <strong>100% Indian Chaldean System  • Developed By: SHOVAN KAPRI • For Consultation Contact 9875340842 / 8158874131</strong></p>
+            
+            <!-- HORIZONTAL THEME CONTROL BAR -->
+            <div class="theme-control-bar">
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Theme">🌓</button>
+                <div class="theme-selector-container">
+                    <div class="theme-dot emerald active" onclick="setTheme('emerald')" title="Emerald">
+                        <span class="tooltip">Emerald</span>
+                    </div>
+                    <div class="theme-dot sapphire" onclick="setTheme('sapphire')" title="Sapphire">
+                        <span class="tooltip">Sapphire</span>
+                    </div>
+                    <div class="theme-dot crimson" onclick="setTheme('crimson')" title="Crimson">
+                        <span class="tooltip">Crimson</span>
+                    </div>
+                    <div class="theme-dot amber" onclick="setTheme('amber')" title="Amber">
+                        <span class="tooltip">Amber</span>
+                    </div>
+                    <div class="theme-dot purple" onclick="setTheme('purple')" title="Purple">
+                        <span class="tooltip">Purple</span>
+                    </div>
+                    <div class="theme-dot ocean" onclick="setTheme('ocean')" title="Ocean">
+                        <span class="tooltip">Ocean</span>
+                    </div>
+                    <div class="theme-dot sunrise" onclick="setTheme('sunrise')" title="Sunrise">
+                        <span class="tooltip">Sunrise</span>
+                    </div>
+                    <div class="theme-dot midnight" onclick="setTheme('midnight')" title="Midnight">
+                        <span class="tooltip">Midnight</span>
+                    </div>
+                    <div class="theme-dot rose" onclick="setTheme('rose')" title="Rose Gold">
+                        <span class="tooltip">Rose Gold</span>
+                    </div>
+                    <div class="theme-dot forest" onclick="setTheme('forest')" title="Forest">
+                        <span class="tooltip">Forest</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INPUT BOX -->
+        <div class="input-box">
+            <input type="date" id="dob" required>
+            <select id="gender">
+                <option value="male">Male (পুরুষ)</option>
+                <option value="female">Female (মহিলা)</option>
+            </select>
+            <input type="text" id="clientName" placeholder="ইংরেজি বড় অক্ষরে নাম লিখুন" style="text-transform: uppercase;">
+            <div class="action-container">
+                <button onclick="runNumerologyEngine()">✨ Generate Master Cosmic Audit</button>
+                <button id="downloadPdfBtn" class="pdf-btn" onclick="generatePdfReportLayout()" style="display: none;">📄 Download Full Report (PDF)</button>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboardView" style="display:none;">
+            <!-- TOP DASHBOARD -->
+            <div class="dashboard">
+                <div class="grid-wrapper">
+                    <div class="loshu-grid" id="gridContainer"></div>
+                </div>
+                <div class="metric-card">
+                    <h3>🌀 Cosmic Architecture</h3>
+                    <div id="pillarsContainer"></div>
+                </div>
+            </div>
+
+            <!-- SPECIAL ALERTS -->
+            <div id="specialAlertsContainer"></div>
+
+            <!-- SECTION 1: NAME ANALYSIS -->
+            <div class="section-title">১. নাম সংশোধন ও ভাগ্য পরিবর্তনের গভীর অডিট (Premium Name Vibration Audit)</div>
+            <div id="nameAnalysisContainer"></div>
+
+            <!-- TOGGLE: EXPLANATION -->
+            <button class="toggle-btn" onclick="toggleExplanationLayout()">
+                <span>🌌 গাণিতিক সূত্রাবলী ও মহাজাগতিক গণনা পদ্ধতি (Esoteric Calculation Logic)</span>
+                <span id="toggle-icon">▼</span>
+            </button>
+            <div class="explanation-box" id="systemExplanationLayout">
+                <div class="report-block" style="border-left-color: #2980b9;">
+                    <h3>১. ড্রাইভার নম্বর (Driver/Psychic Number) গণনা পদ্ধতি</h3>
+                    <div class="lang-split">
+                        <div class="bn-text"><strong>সূত্র:</strong> আপনার জন্মদিনের তারিখটিকে একক সংখ্যায় রূপান্তর করলে ড্রাইভার নম্বর পাওয়া যায়। যেমন, ২৩ তারিখে জন্ম হলে ড্রাইভার হবে ২ + ৩ = ৫। এটি ব্যক্তির মূল চরিত্র ও জন্মগত প্রতিভা নির্দেশ করে।</div>
+                        <div class="en-text"><strong>Formula:</strong> Reduced single digit of your birth date. Example: Date 23 reduces to 2 + 3 = 5. Defines the core identity and foundational behavior.</div>
+                    </div>
+                </div>
+                <div class="report-block" style="border-left-color: #27ae60;">
+                    <h3>২. কন্ডাক্টর নম্বর (Conductor/Destiny Number) গণনা পদ্ধতি</h3>
+                    <div class="lang-split">
+                        <div class="bn-text"><strong>সূত্র:</strong> সম্পূর্ণ জন্মতারিখের দিন, মাস এবং সালের সমস্ত অংক যোগ করে একক সংখ্যায় আনলে কন্ডাক্টর নম্বর পাওয়া যায়। এটি ব্যক্তির জীবনের চূড়ান্ত উদ্দেশ্য ও ভাগ্য নির্ধারণ করে।</div>
+                        <div class="en-text"><strong>Formula:</strong> Total compound sum of Day + Month + Full Year reduced to a single digit. Maps out the ultimate life destiny.</div>
+                    </div>
+                </div>
+                <div class="report-block" style="border-left-color: #ff9f43;">
+                    <h3>৩. নামের বানান সংশোধন ও চালডিয়ান পদ্ধতি (Chaldean Name System)</h3>
+                    <div class="lang-split">
+                        <div class="bn-text"><strong>সূত্র:</strong> প্রাচীন ক্যাদিয়ান নিউমারোলজি চার্ট অনুযায়ী প্রতিটি ইংরেজি অক্ষরের একটি নির্দিষ্ট গাণিতিক কম্পন মান রয়েছে ($A,I,J,Q,Y=1; B,K,R=2; C,G,L,S=3; D,M,T=4; E,H,N,X=5; U,V,W=6; O,Z=7; F,P=8$)। নামের সমস্ত অক্ষরের মান যোগ করে যে একক সংখ্যা বা নেম নম্বর পাওয়া যায়, তা যদি জন্মতারিখের মিত্রে আনা যায় তবে ভাগ্য অবধারিতভাবে উন্নত হয়।</div>
+                        <div class="en-text"><strong>Formula:</strong> Based on ancient Chaldean system values assigned to letters. Aligning the final reduced single name digit with friendly birth parameters instantly activates hidden luck channels.</div>
+                    </div>
+                </div>
+                <div class="report-block" style="border-left-color: #2c3e50;">
+                    <h3>৪. লো শু গ্রিডের সংখ্যা বিন্যাস লজিক (Lo Shu Magic Square Logic)</h3>
+                    <div class="lang-split">
+                        <div class="bn-text"><strong>সিস্টেম লজিক:</strong> এটি চীনা সংখ্যাতত্ত্বের একটি প্রাচীন ৩x৩ ম্যাজিক বর্গক্ষেত্র। এর প্রতিটি ঘরের অবস্থান নির্দিষ্ট ও অপরিবর্তনীয় (৪-৯-২, ৩-৫-৭, ৮-১-৬)। এর বিশেষ গাণিতিক শক্তি হলো—যেকোনো দিক থেকে যোগ করলে যোগফল সর্বদা ১৫ হয়, যা নিখুঁত ভারসাম্যের প্রতীক।</div>
+                        <div class="en-text"><strong>System Logic:</strong> Ancient Chinese 3x3 Magic Square architecture. Individual coordinates are fixed. The hyper-mathematical logic locks a constant compound sum of 15 across any directional axis.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: REPETITION -->
+            <div class="section-title">২. সংখ্যাধিক্য ও গ্রহের তীব্রতা বিশ্লেষণ (Dynamic 1-9 Repetition Analytics)</div>
+            <div id="repetitionAnalyticsContainer"></div>
+
+            <!-- SECTION 3: ZODIAC -->
+            <div class="section-title">৩. রাশিচক্র ও পার্টনার সামঞ্জস্যতা (Zodiac & Elite Partner Matrix)</div>
+            <div id="zodiacContainer"></div>
+
+            <!-- SECTION 4: DRIVER -->
+            <div class="section-title">৪. ড্রাইভার নম্বর ও ক্যারিয়ার অডিট (Driver Engine & Best Professions)</div>
+            <div id="driverDeepContainer"></div>
+
+            <!-- SECTION 5: RISK -->
+            <div class="section-title">৫. কমার্শিয়াল সুযোগ ও ভবিষ্যতের ঝুঁকি বিশ্লেষণ (Opportunities & Major Risks Audit)</div>
+            <div id="riskOpportunitiesContainer"></div>
+
+            <!-- SECTION 6: HEALTH -->
+            <div class="section-title">৬. স্বাস্থ্য ও জীবনধারা নির্দেশিকা (Premium Health & Wellness Matrix)</div>
+            <div id="healthContainer"></div>
+
+            <!-- SECTION 7: LIFECYCLE -->
+            <div class="section-title">৭. সম্পূর্ণ জীবনচক্রের নিখীত টাইমলাইন (99.99% Accurate Lifeline Calculation)</div>
+            <div id="lifeCalculationContainer"></div>
+
+            <!-- SECTION 8: PLANES -->
+            <div class="section-title">৮. লো শু গ্রিড সমতল ও অসম্পূর্ণ রেখা বিশ্লেষণ (Advanced 8 Plane Matrix & Void Lines)</div>
+            <div id="planesContainer"></div>
+        </div>
+    </div>
+
+    <!-- PRINT ONLY FOOTER FOR EVERY PAGE -->
+    <div class="print-footer">
+        ES Ultimate Numerology OS •  Developed By: SHOVAN KAPRI • For Consultation Contact 8158874131 / 9875340842
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ===== JAVASCRIPT: ALL LOGIC INTACT + PASSWORD ===== -->
+    <!-- ============================================================ -->
+    <script>
+        // ===== PASSWORD SYSTEM =====
+        const CORRECT_PASSWORD = "9842";
+        let isUnlocked = false;
+
+        function verifyPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            const overlay = document.getElementById('passwordOverlay');
+            const container = document.getElementById('mainContainer');
+
+            if (input.value === CORRECT_PASSWORD) {
+                isUnlocked = true;
+                overlay.classList.add('hidden');
+                container.style.display = 'block';
+                error.textContent = '';
+                input.value = '';
+                // Focus on the first input after unlock
+                setTimeout(() => {
+                    document.getElementById('dob').focus();
+                }, 300);
+            } else {
+                error.textContent = '❌ ভুল পাসওয়ার্ড! আবার চেষ্টা করুন। (Wrong password! Try again.)';
+                input.value = '';
+                input.focus();
+                input.style.borderColor = '#e74c3c';
+                setTimeout(() => {
+                    input.style.borderColor = 'rgba(255,255,255,0.1)';
+                }, 1000);
+            }
+        }
+
+        // Enter key support
+        document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+        });
+
+        // ===== COSMIC CANVAS PARTICLES =====
+        const canvas = document.getElementById('cosmic-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = Math.random() * 0.2 - 0.1;
+                this.speedY = Math.random() * 0.2 - 0.1;
+                this.hue = Math.random() > 0.5 ? 145 : 45;
+                this.opacity = Math.random() * 0.3 + 0.08;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = `hsla(${this.hue}, 70%, 60%, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 100; i++) particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update();
+                p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles();
+        animateParticles();
+
+        // ===== THEME FUNCTIONS =====
+        function setTheme(themeName) {
+            document.body.classList.remove('theme-emerald', 'theme-sapphire', 'theme-crimson', 'theme-amber', 'theme-purple', 'theme-ocean', 'theme-sunrise', 'theme-midnight', 'theme-rose', 'theme-forest');
+            document.body.classList.add('theme-' + themeName);
+            
+            document.querySelectorAll('.theme-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+            document.querySelector('.theme-dot.' + themeName).classList.add('active');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const btn = document.querySelector('.theme-toggle');
+            if (document.body.classList.contains('dark-theme')) {
+                btn.textContent = '☀️';
+            } else {
+                btn.textContent = '🌓';
+            }
+        }
+
+        function toggleExplanationLayout() {
+            const layout = document.getElementById('systemExplanationLayout');
+            const icon = document.getElementById('toggle-icon');
+            if (layout.style.display === 'block') {
+                layout.style.display = 'none';
+                icon.innerHTML = '▼';
+            } else {
+                layout.style.display = 'block';
+                icon.innerHTML = '▲';
+            }
+        }
+
+        function generatePdfReportLayout() { window.print(); }
+
+        function toggleChaldeanDropdown(id) {
+            const body = document.getElementById(id);
+            if (body.classList.contains('open')) {
+                body.classList.remove('open');
+            } else {
+                body.classList.add('open');
+            }
+        }
+
+        // ================================================================
+        // ===== ALL ORIGINAL DATA & FUNCTIONS (100% INTACT) =====
+        // ================================================================
+
+        const chaldeanLetterValues = {
+            'A': 1,
+            'I': 1,
+            'J': 1,
+            'Q': 1,
+            'Y': 1,
+            'B': 2,
+            'K': 2,
+            'R': 2,
+            'C': 3,
+            'G': 3,
+            'L': 3,
+            'S': 3,
+            'D': 4,
+            'M': 4,
+            'T': 4,
+            'E': 5,
+            'H': 5,
+            'N': 5,
+            'X': 5,
+            'U': 6,
+            'V': 6,
+            'W': 6,
+            'O': 7,
+            'Z': 7,
+            'F': 8,
+            'P': 8
+        };
+
+        const friendEnemyDatabase = {
+            1: {
+                friends: [1, 2, 3, 5, 9],
+                enemies: [8],
+                neutral: [4, 6, 7],
+                friend_desc: 'সূর্যের রাজকীয় শক্তি - আত্মবিশ্বাস, নেতৃত্ব ও স্বাধীনতা প্রদান করে',
+                enemy_desc: 'শনির সাথে সংঘাত - অতিরিক্ত অহংকার ও ধৈর্যের অভাব সৃষ্টি করে'
+            },
+            2: {
+                friends: [1, 3, 5],
+                enemies: [4, 8],
+                neutral: [2, 6, 7, 9],
+                friend_desc: 'চন্দ্রের স্নিগ্ধতা - সৃজনশীলতা, কূটনীতি ও মানসিক প্রশান্তি আনে',
+                enemy_desc: 'রাহু ও শনির সাথে সংঘাত - মানসিক অস্থিরতা ও সিদ্ধান্তহীনতা বাড়ায়'
+            },
+            3: {
+                friends: [1, 2, 3, 5, 7, 9],
+                enemies: [6],
+                neutral: [4, 8],
+                friend_desc: 'বৃহস্পতির প্রজ্ঞা - জ্ঞান, বাগ্মীতা ও দূরদর্শিতা বৃদ্ধি করে',
+                enemy_desc: 'শুক্রের সাথে সংঘাত - বিলাসিতার প্রতি অতিরিক্ত আসক্তি সৃষ্টি করে'
+            },
+            4: {
+                friends: [1, 5, 6, 7],
+                enemies: [2, 8, 9],
+                neutral: [3, 4],
+                friend_desc: 'রাহুর বিদ্রোহী শক্তি - উদ্ভাবনী ক্ষমতা ও টেকনিক্যাল দক্ষতা বাড়ায়',
+                enemy_desc: 'চন্দ্র, শনি ও মঙ্গলের সাথে সংঘাত - জীবনে অস্থিরতা ও আকস্মিক পরিবর্তন আনে'
+            },
+            5: {
+                friends: [1, 2, 3, 5, 6, 8],
+                enemies: [],
+                neutral: [4, 7, 9],
+                friend_desc: 'বুধের ব্যবসায়িক বুদ্ধি - যোগাযোগ দক্ষতা, বুদ্ধিমত্তা ও অভিযোজন ক্ষমতা বাড়ায়',
+                enemy_desc: 'এই সংখ্যার কোনো শত্রু নেই - এটি সর্বজনীন মিত্র সংখ্যা'
+            },
+            6: {
+                friends: [4, 5, 6, 7, 8],
+                enemies: [3, 9],
+                neutral: [1, 2],
+                friend_desc: 'শুক্রের বিলাসিতা - সৌন্দর্য, সম্পদ, পারিবারিক সুখ ও সামাজিক মর্যাদা বৃদ্ধি করে',
+                enemy_desc: 'বৃহস্পতি ও মঙ্গলের সাথে সংঘাত - সম্পর্কের টানাপোড়েন ও আর্থিক অপচয় ঘটায়'
+            },
+            7: {
+                friends: [1, 3, 4, 5, 6],
+                enemies: [8],
+                neutral: [2, 7, 9],
+                friend_desc: 'কেতুর আধ্যাত্মিকতা - গবেষণা, অন্তর্দৃষ্টি ও গুপ্ত বিদ্যায় দক্ষতা বাড়ায়',
+                enemy_desc: 'শনির সাথে সংঘাত - একাকীত্ব, বিচ্ছিন্নতা ও মানসিক যন্ত্রণা দেয়'
+            },
+            8: {
+                friends: [4, 5, 6],
+                enemies: [1, 2, 7, 9],
+                neutral: [3, 8],
+                friend_desc: 'শনির শৃঙ্খলা - ধৈর্য, কঠোর পরিশ্রম ও দীর্ঘমেয়াদী সাফল্য আনে',
+                enemy_desc: 'সূর্য, চন্দ্র, কেতু ও মঙ্গলের সাথে সংঘাত - জীবনে বিলম্ব, বাধা ও আইনি জটিলতা তৈরি করে'
+            },
+            9: {
+                friends: [1, 3, 5],
+                enemies: [4, 6, 8],
+                neutral: [2, 7, 9],
+                friend_desc: 'মঙ্গলের সাহস - শক্তি, উদ্দীপনা, প্রতিযোগিতামূলক মানসিকতা ও মানবিকতা বৃদ্ধি করে',
+                enemy_desc: 'রাহু, শুক্র ও শনির সাথে সংঘাত - অতিরিক্ত রাগ, দুর্ঘটনা ও আইনি ঝামেলা ডেকে আনে'
+            }
+        };
+
+        const compatibilityMatrix = {
+            1: { friendly: [1, 2, 3, 5, 9], enemy: [8], neutral: [4, 6, 7] },
+            2: { friendly: [1, 3, 5], enemy: [4, 8], neutral: [2, 6, 7, 9] },
+            3: { friendly: [1, 2, 3, 5, 7, 9], enemy: [6], neutral: [4, 8] },
+            4: { friendly: [1, 5, 6, 7], enemy: [2, 8, 9], neutral: [3, 4] },
+            5: { friendly: [1, 2, 3, 5, 6, 8], enemy: [], neutral: [4, 7, 9] },
+            6: { friendly: [4, 5, 6, 7, 8], enemy: [3, 9], neutral: [1, 2] },
+            7: { friendly: [1, 3, 4, 5, 6], enemy: [8], neutral: [2, 7, 9] },
+            8: { friendly: [4, 5, 6], enemy: [1, 2, 7, 9], neutral: [3, 8] },
+            9: { friendly: [1, 3, 5], enemy: [4, 6, 8], neutral: [2, 7, 9] }
+        };
+
+        const nameVibeDatabase = {
+            1: {
+                vibe_bn: '১ নম্বরের ভাইব হলো রবির তেজস্বী এনার্জি। এই নামের অধিকারী ব্যক্তিরা অত্যন্ত স্বতন্ত্র, আত্মবিশ্বাসী এবং যেকোনো ভিড়ের মধ্যে আলাদাভাবে নজর কাড়েন। এদের ব্যক্তিত্বে একটি কমান্ডিং পাওয়ার থাকে।',
+                vibe_en: 'Sovereign Solar energy footprint. Emits intense independence, commanding authority, high public recognition, and absolute pioneering resilience.',
+                fix_bn: 'যদি এই ১ সংখ্যাটি জন্মতারিখের শত্রুতে থাকে, তবে নামের বানানে একটি "A", "I" বা "Y" (যার মান ১) বাদ দিয়ে অথবা যোগ করে পুরো যোগফলটিকে ৫ (বুধ) বা ৬ (শুক্র)-এর ভাইবে কনভার্ট করুন।',
+                fix_en: 'If hostile to birth elements, structurally add or remove letters like A, I, or Y to shift the cumulative compound matrix seamlessly onto a Mercury (5) or Venus (6) balance axis.'
+            },
+            2: {
+                vibe_bn: '২ নম্বরের ভাইব হলো চন্দ্রের শান্ত ও আকর্ষণীয় শক্তি। এই নামের মানুষেরা প্রচণ্ড সৃজনশীল, মিশুকে, বন্ধুবৎসল এবং মনস্তাত্ত্বিক সমঝোতায় পারদর্শী হন। মানুষের মন এরা দ্রুত কাড়তে পারেন।',
+                vibe_en: 'Magnetic Lunar vibration layout. Endows refined diplomatic agility, deep creative visualization capacity, societal charm, and highly responsive empathetic listening.',
+                fix_bn: 'যদি ২ সংখ্যাটি আপনার চার্টে ব্লকেজ তৈরি করে, তবে নামের বানানে "B" বা "R" (যার মান ২) এর ফ্রিকোয়েন্সি নিয়ন্ত্রণ করে নামটিকে ১ (সূর্য) বা ৩ (বৃহস্পতি)-এর পরম মিত্র লাইনে নিয়ে যান।',
+                fix_en: 'If inducing emotional analysis loops, adjust letters like B or R to forcefully upgrade the total name vibration onto stable Solar (1) or Jupiterian (3) numeric assets.'
+            },
+            3: {
+                vibe_bn: '৩ নম্বরের ভাইব হলো দেবগুরু বৃহস্পতির প্রফেশনাল জ্ঞান ও বাগ্মীতা। এই নামের জাতকদের কথা বলার ধরন অত্যন্ত আকর্ষণীয় হয় এবং এরা প্রাকৃতিকভাবেই শিক্ষক, উপদেষ্টা বা পথপ্রদর্শক হিসেবে সুনাম পান।',
+                vibe_en: 'Elite Jovian advisory aura. Radiates master intellectual capabilities, absolute conceptual clarity, professional counseling wit, and stellar vocal expression loops.',
+                fix_bn: 'যদি ৩ সংখ্যাটি শুক্র প্রধান (৬) জাতকের সাথে শত্রুতা তৈরি করে, তবে নামের বানানে একটি "C" বা "S" অক্ষরের বিন্যাস বদলে নামটিকে ৫ (বুধ) বা ১ (সূর্য)-এর নিরাপদ জোনে এলাইন করুন।',
+                fix_en: 'If clashing with Venusian traits, modify characters valued at 3 (C, G, L, S) to lock the total numeric layout safely on a progressive Solar (1) or Mercurial (5) grid.'
+            },
+            4: {
+                vibe_bn: '৪ নম্বরের ভাইব হলো রাহুর ছক-ভাঙা অপ্রথাগত বুদ্ধিমত্তা। এই নামের জাতকেরা অত্যন্ত বাস্তববাদী, মেকানিকেল ও টেকনিক্যাল বিষয়ে জিনিয়াস এবং গতানুগতিক নিয়মের বাইরে গিয়ে ইতিহাস তৈরি করতে পারেন।',
+                vibe_en: 'Radical Rahu paradigm shifter. Exhibits sharp structural skeptic logic, mastery over tech frameworks, out-of-the-box system tracking, and sudden disruptive success vectors.',
+                fix_bn: '৪ সংখ্যাটি চার্টে তীব্র অস্থিরতা বা আর্থিক লিক তৈরি করলে নামের বানানে একটি "D" বা "M" (যার মান ৪) পরিবর্তন করে অবিলম্বে বুধ (৫) বা শুক্র (৬) এলিমেন্ট দিয়ে নাম ব্যালেন্স করুন।',
+                fix_en: 'If provoking heavy capital dispersion or legal errors, remove characters valued at 4 (D, M, T) and infuse Venusian (6) vowels to stabilize asset metrics.'
+            },
+            5: {
+                vibe_bn: '৫ নম্বরের ভাইব হলো বুধের একচ্ছত্র ব্যবসায়িক বুদ্ধি ও চিরতরুণ এনার্জি। এই নামের জাতকদের নেটওয়ার্কিং ক্ষমতা অলৌকিক স্তরের। এরা খুব দ্রুত যেকোনো পরিস্থিতি অনুযায়ী ডিল ক্লোজ করতে পারেন।',
+                vibe_en: 'Ultimate Mercurial trade axis. Emits extreme conversational wit, rapid multi-niche trading intelligence, stellar market adaptability, and perpetual youth vibrations.',
+                fix_bn: '৫ নম্বরটি ইউনিভার্সাল ফ্রেন্ডলি সংখ্যা। যদি এর পাওয়ার আরও বাড়াতে চান, তবে বানানে একটি "E" বা "N" (যার মান ৫) যুক্ত করে নামটিকে চূড়ান্ত রাজযোগের ফ্রিকোয়েন্সিতে লক করুন।',
+                fix_en: 'The universal fluid stabilizer number. To maximize commercial scaling, systematically multiply letters valued at 5 (E, H, N) to activate absolute financial sovereignty.'
+            },
+            6: {
+                vibe_bn: '৬ নম্বরের ভাইব হলো শুক্রের পরম রাজকীয় বিলাসিতা ও জৌলুস। এই নামের মানুষেরা অত্যন্ত আকর্ষণীয় আভাযুক্ত হন। লাক্সারি লাইফ, মিডিয়া এবং ফিন্যান্সিয়াল রিসোর্স এদের দিকে নিজে থেকে আকৃষ্ট হয়।',
+                vibe_en: 'Premium Venusian luxury magnetism footprint. Projects a highly seductive social aura, global public fame, seamless premium cash flow traction, and mastery over aesthetics.',
+                fix_bn: '৬ সংখ্যাটি যদি ৩ নম্বর (বৃহস্পতি) প্রধান জাতকদের সাথে সংঘাত তৈরি করে, তবে বানানের "U" বা "W" (যার মান ৬) মডিফাই করে নামটিকে ১ (সূর্য) বা ৫ (বুধ)-এর সর্বজনীন শুভ সংখ্যায় সিফট করুন।',
+                fix_en: 'If generating structural friction with institutional knowledge grids, alter letters U, V, or W to pivot the collective name metric cleanly onto Solar (1) or Mercurial (5) lines.'
+            },
+            7: {
+                vibe_bn: '৭ নম্বরের ভাইব হলো কেতুর রহস্যময় ও গবেষণামূলক আধ্যাত্মিক শক্তি। এই নামের মানুষেরা প্রচণ্ড অ্যানালিটিক্যাল হন। এরা মানুষের ভেতরের সত্যতা এক নজরেই ডিটেক্ট করে ফেলতে পারেন।',
+                vibe_en: 'Mystic Ketu spiritual matrix. Instills profound subsurface intuitive metrics, unparalleled data research skepticism, and total mastery over abstract concepts.',
+                fix_bn: '৭ নম্বরটি যদি বৈষয়িক বা আর্থিক সাফল্যে বাধা দেয়, তবে নামের বানান থেকে "O" (যার মান ৭) এর আধিক্য কমিয়ে বুদ্ধির কারক বুধ (৫) বা সম্পদের কারক শুক্র (৬) ফ্রিকোয়েন্সিতে নাম রি-ডিজাইন করুন।',
+                fix_en: 'If inducing isolation or delaying physical wealth generation, restrict characters valued at 7 (O, Z) and restructure spelling patterns with Venus (6) configurations.'
+            },
+            8: {
+                vibe_bn: '৮ নম্বরের ভাইব হলো শনির জাজমেন্টাল ও দীর্ঘমেয়াদি ম্যাসিভ কর্পোরেট পাওয়ার। এই নামের মানুষেরা অত্যন্ত নিয়মানুবর্তী, পরিপক্ক এবং কোটি টাকার পরিকাঠামো বা অর্গানাইজেশন সামলানোর ক্ষমতা রাখেন।',
+                vibe_en: 'Saturnian industrial sovereign empire template. Instills infinite patience, structural maturity, executive network management, and deep monumental asset building capacities.',
+                fix_bn: '৮ নম্বরটি কেরিয়ারে অতিরিক্ত বিলম্ব বা আইনি জট তৈরি করলে নামের বানান থেকে অবিলম্বে শনির ভাইব কমিয়ে ১ (সূর্য), ৩ (বৃহস্পতি) বা ৫ (বুধ)-এর মিত্র সংখ্যায় স্পেলিং লক করুন।',
+                fix_en: 'If triggering acute operational delays or structural obstacles, aggressively purge or modify 8-vibe letters and anchor the final sum directly to Jupiter (3) or Mercury (5).'
+            },
+            9: {
+                vibe_bn: '৯ নম্বরের ভাইব হলো মঙ্গলের অপরাজেয় সেনাপতি এনার্জি। এই নামের মানুষদের মধ্যে অফুরন্ত সাহস, উদ্দীপনা এবং শত্রুদের পরাজিত করে নিজের অধিকার ছিনিয়ে নেওয়ার এক যোদ্ধাসুলভ তেজ থাকে।',
+                vibe_en: 'Invincible Martian warrior blueprint. Radiates high physical vitality, absolute territorial authority, unmatched competitive grit, and supreme humanitarian protective drives.',
+                fix_bn: '৯ নম্বরটি যদি রাগে অন্ধ করে বা দুর্ঘটনা বাড়ায়, তবে বানানে একটি "F" বা "P" (যার মান ৮) অ্যাডজাস্ট করে টোটাল নামটিকে শান্ত চন্দ্র (২) বা সুষম বুধ (৫) এনার্জিতে সমতায় আনুন।',
+                fix_en: 'If fueling self-destructive anger spikes or crisis loops, balance the name alignment by recalculating the vowels toward balanced Moon (2) or stable Mercury (5) values.'
+            }
+        };
+
+        const repetitionDatabase = {
+            1: {
+                title_bn: '☀️ সূর্য উপাদান - সংখ্যা ১ এর প্রভাব',
+                title_en: 'Sun Element - Number 1 Metrics',
+                1: { bn: '১ নম্বরটি চার্টে একবার উপস্থিত। আপনি স্বাভাবিকভাবে মনের ভাব প্রকাশ করতে পারেন তবে স্বভাবে কিছুটা অন্তর্মুখী। একা কাজ করতে বেশি স্বাচ্ছন্দ্য বোধ করেন।', en: 'Appears once. Clear expression with an introverted baseline, favoring independent workflows.' },
+                2: { bn: 'চমৎকার যোগ! ১ নম্বরটি দুবার থাকায় আপনার যোগাযোগ ক্ষমতা দুর্দান্ত। আপনি অত্যন্ত বাস্তববাদী, যুক্তিবাদী এবং সঠিক সময়ে সঠিক সিদ্ধান্ত সবার সামনে প্রকাশ করতে পারেন।', en: 'Appears twice. Confers brilliant objectivity, balanced speech patterns, and stellar professional diplomacy.' },
+                3: { bn: '১ তিনবার রয়েছে। আপনি অতিরিক্ত কথা বলতে ভালোবাসেন। মাঝে মাঝে সিদ্ধান্তহীনতা বা অতিরিক্ত বাচালতার কারণে হাতের ভালো সুযোগ নষ্ট করে ফেলেন।', en: 'Appears thrice. Over-talkative disposition. Latent career volatility caused by erratic, impulsive communication loops.' },
+                4: { bn: '১ চারবার বা তার বেশি রয়েছে। এটি তীব্র অহংকার এবং একগুঁয়ে স্বভাবের জন্ম দেয়। আপনি অন্যের মতামত গ্রাহ্য করেন না এবং নিজের সিদ্ধান্ত জোর করে চাপিয়ে দিতে চান।', en: 'Appears four or more times. Hyper-authoritarian ego blocks. Tends to aggressively dominate conversations, inviting structural corporate friction.' }
+            },
+            2: {
+                title_bn: '🌙 চন্দ্র উপাদান - সংখ্যা ২ এর প্রভাব',
+                title_en: 'Moon Element - Number 2 Metrics',
+                1: { bn: '২ নম্বরটি চার্টে একবার রয়েছে। আপনার মধ্যে স্বাভাবিক মানসিক সংবেদনশীলতা, স্থায়ী বুদ্ধিমত্তা এবং চমৎকার বোঝার ক্ষমতা রয়েছে।', en: 'Appears once. Normal emotional equilibrium, strong adaptive empathy, and intuitive listening skills.' },
+                2: { bn: '২ দুবার থাকার কারণে আপনি পরম রোমান্টিক ও আবেগপ্রবণ। তবে আপনার প্রধান মানসিক বাধা হলো তীব্র OVER-THINKING এবং শেষ মুহূর্তে সিদ্ধান্তহীনতায় ভোগা।', en: 'Appears twice. Extremely imaginative but heavily vulnerable to critical analysis paralysis and chronic overthinking loops.' },
+                3: { bn: '২ তিনবার থাকার অর্থ আপনার মন কাঁচের মতো নরম। সামান্য কারণে প্রচণ্ড আঘাত পাওয়া, হঠাৎ মুড সুইং হওয়া এবং একাকীত্ব বোধ করা আপনার প্রধান সমস্যা।', en: 'Appears thrice. Severe psychic sensitivity. Experiences rapid mood transitions and deep feelings of emotional isolation.' },
+                4: { bn: '২ চারবার বা তার বেশি থাকা চরম মানসিক অস্থিরতার লক্ষণ। আপনি নিজের আবেগকে নিয়ন্ত্রণে রাখতে পারেন না এবং খামখেয়ালি সিদ্ধান্ত নিয়ে বসেন।', en: 'Appears four or more times. High emotional turbulence. Absorbs external environmental trauma far too quickly, requiring strict spiritual grounding.' }
+            },
+            3: {
+                title_bn: '🔱 বৃহস্পতি উপাদান - সংখ্যা ৩ এর প্রভাব',
+                title_en: 'Jupiter Element - Number 3 Metrics',
+                1: { bn: '৩ নম্বরটি চার্টে একবার রয়েছে। আপনার জ্ঞান আহরণের ক্ষমতা প্রবল, সৃজনশীল প্রতিভা ভালো এবং আপনি গঠনমূলক আদেশকে সম্মান করেন।', en: 'Appears once. Healthy thirst for knowledge, standard creative capabilities, and respect for structured ethics.' },
+                2: { bn: '৩ দুবার থাকার অর্থ আপনার বুদ্ধিমত্তা এবং দূরদর্শিতা প্রখর। আপনি যেকোনো ক্রিয়েটিভ বা ট্রেইনিং সেক্টরে অন্য সবার থেকে দ্রুত শীর্ষস্থান দখল করতে পারেন।', en: 'Appears twice. Outstanding visionary intellect. Highly favored for dominance in advisory, training, or educational spaces.' },
+                3: { bn: '৩ তিনবার থাকার কারণে আপনার মেধা তীব্র হলেও আপনি বাস্তব জগত থেকে বিচ্ছিন্ন হয়ে কাল্পনিক জগতে বাস করেন। অতিরিক্ত স্পষ্টবাদিতা আপনার ক্ষতি করে।', en: 'Appears thrice. Hyper-intellectual tracking but detached from grounded realities. Over-blunt expressions harm valuable business circles.' },
+                4: { bn: '৩ চারবার বা তার বেশি থাকলে জাতক অসম্ভব অহংকারী স্বভাবের হয়ে ওঠে। আপনি কাউকে নিজের চেয়ে যোগ্য মনে করেন না এবং ভুল জায়গায় জ্ঞান দিয়ে লোকসান করেন।', en: 'Appears four or more times. Supreme intellectual arrogance. Rejects critical structural feedback, triggering commercial failures due to overconfidence.' }
+            },
+            4: {
+                title_bn: '⚡ রাহু উপাদান - সংখ্যা ৪ এর প্রভাব',
+                title_en: 'Rahu Element - Number 4 Metrics',
+                1: { bn: '৪ নম্বরটি চার্টে একবার রয়েছে। আপনি একজন শৃঙ্খলাপরায়ন, পরিশ্রমী এবং বাস্তবমুখী পরিকল্পনাকারী।', en: 'Appears once. Disciplined executor, pragmatic thinker, and reliable blueprint architect.' },
+                2: { bn: '৪ দুবার থাকার কারণে আপনার প্রথাগত নিয়মের বাইরে চিন্তা করার ক্ষমতা চমৎকার। টেকনিক্যাল বা আইটি লাইনে আপনি বিশাল সফল হতে পারেন।', en: 'Appears twice. Outstanding unorthodox strategist. Exceptional capabilities to dominate complex technology frameworks and digital operations.' },
+                3: { bn: '৪ তিনবার থাকার অর্থ আপনার জীবন অত্যন্ত অস্থির এবং আকস্মিক পরিবর্তনে ভরা। আপনি নিয়মের অধীনে থাকতে ভালোবাসেন না এবং হঠকারী সিদ্ধান্ত নেন।', en: 'Appears thrice. Highly erratic timeline. Severe resistance to standard corporate regulations, inviting abrupt job or operational collapses.' },
+                4: { bn: '৪ চারবার বা তার বেশি থাকলে জাতকের জীবন এক চরম রহস্যের গোলকধাঁধায় পরিণত হয়। বেআইনি শর্টকাট নেওয়ার প্রবণতা এবং হঠাৎ দেউলিয়া হওয়ার ঝুঁকি থাকে।', en: 'Appears four or more times. Extreme volatility footprint. Chasing volatile financial formats can trigger critical enforcement or asset destruction risks.' }
+            },
+            5: {
+                title_bn: '⚖️ বুধ উপাদান - সংখ্যা ৫ এর প্রভাব',
+                title_en: 'Mercury Element - Number 5 Metrics',
+                1: { bn: '৫ নম্বরটি চার্টে একবার রয়েছে। এটি আপনাকে মানসিক স্থায়িত্ব, চমৎকার ব্যবসায়িক বুদ্ধি এবং সঠিক ভারসাম্য প্রদান করে।', en: 'Appears once. Secures stable psychological focus, sharp mercantile logic, and optimal life balance.' },
+                2: { bn: '৫ দুবার (55) থাকা একটি পরম আশীর্বাদ ও সুরক্ষাকবচ। এটি বুধের শক্তিকে দ্বিগুণ করে আপনার জীবনের যেকোনো বড় ফিন্যান্সিয়াল বা পারিবারিক বিপর্যয়কে ঠাণ্ডা মাথায় সামলে নেওয়ার এক অসাধারণ ক্ষমতা দেয়। ব্যবসা-বাণিজ্যে আপনি অপরাজেয়।', en: 'Appears twice (55). A monumental cosmic shield. It doubles your commercial intelligence, protecting you against sudden macro failures and ensuring immense recovery stamina in trade.' },
+                3: { bn: '৫ তিনবার থাকার ফলে আপনার চঞ্চলতা অতিরিক্ত বেড়ে যায়। আপনি একই সাথে অনেকগুলো ব্যবসায় জড়িয়ে কোনো একটিতেও থিতু হতে পারেন না এবং ফোকাস হারান।', en: 'Appears thrice. Heavy restlessness matrix. Tends to scatter assets across far too many ventures simultaneously, breaking focus lines.' },
+                4: { bn: '৫ চারবার বা তার বেশি থাকা মানে আপনার স্নায়বিক সিস্টেম অত্যন্ত সংবেদনশীল। ভুল কথা এবং অতিরিক্ত উত্তেজনার কারণে বড় ধরনের ব্যবসায়িক ও মানসিক পতনের ঝুঁকি থাকে।', en: 'Appears four or more times. Hyper-vibrational nervous framework. High exposure toward massive operational blunders due to impulsive decisions.' }
+            },
+            6: {
+                title_bn: '💎 শুক্র উপাদান - সংখ্যা ৬ এর প্রভাব',
+                title_en: 'Venus Element - Number 6 Metrics',
+                1: { bn: '৬ নম্বরটি চার্টে একবার রয়েছে। আপনি পরিবার প্রিয়, দায়িত্বশীল এবং বিলাসিতা ও সৌন্দর্যের সমঝদার।', en: 'Appears once. Domestic responsibility, caring orientation, and healthy alignment with premium aesthetics.' },
+                2: { bn: '৬ দুবার থাকার অর্থ আপনার ব্যক্তিত্ব অত্যন্ত আকর্ষণীয়। আপনি বিলাসবহুল জীবন পছন্দ করেন এবং ক্রিয়েটিভ লাইনে বা আর্ট জগতে বড় সাফল্য পান।', en: 'Appears twice. Magnetic physical charisma. Heavily predisposed to dominate luxury trade, luxury lifestyle investments, or creative industries.' },
+                3: { bn: '৬ তিনবার থাকার ফলে পরিবার এবং প্রিয়জনদের নিয়ে আপনার দুশ্চিন্তা অতিরিক্ত মাত্রায় কাজ করে। ব্র্যান্ডের চক্করে পড়ে আপনি আয়ের চেয়ে ব্যয় বেশি করে ফেলেন।', en: 'Appears thrice. Hyper-anxious domestic protectiveness. Severe vulnerability toward luxury spending loops and financial asset leaks.' },
+                4: { bn: '৬ চারবার বা তার বেশি থাকা মানে শুক্রের শক্তির অপব্যবহার। এটি বৈবাহিক জীবনে তীব্র অসন্তোষ, অতিরিক্ত লালসা এবং সম্পর্কের ক্ষেত্রে বড় প্রতারণার যোগ তৈরি করে।', en: 'Appears four or more times. Over-activated luxury tracking. Induces heavy friction within close domestic partnerships and financial over-exposure.' }
+            },
+            7: {
+                title_bn: '🔮 কেতু উপাদান - সংখ্যা ৭ এর প্রভাব',
+                title_en: 'Ketu Element - Number 7 Metrics',
+                1: { bn: '৭ নম্বরটি চার্টে একবার রয়েছে। আপনি জন্মগতভাবেই একজন গবেষক, ইনটিউটিভ চিন্তাবিদ এবং সত্যের সন্ধানী।', en: 'Appears once. Natural researcher, mystic analyzer, and highly aligned with inner gut tracking.' },
+                2: { bn: '৭ দুবার থাকার কারণে আপনার ষষ্ঠ ইন্দ্রিয় আধ্যাত্মিক স্তরে কাজ করে। কোনো বড় বৈজ্ঞানিক বা গুপ্ত রহস্যের সমাধান আপনি নিমেষেই করে ফেলতে পারেন।', en: 'Appears twice. Supernatural intuitive radar profiles. Excels beautifully in macro research engineering or deep esoteric counseling formats.' },
+                3: { bn: '৭ তিনবার থাকার অর্থ আপনি জাগতিক জীবনের সুখ-স্বাচ্ছন্দ্য থেকে নিজেকে দূরে সরিয়ে একাকী করে ফেলেন। কাছের মানুষদের দ্বারা বারবার প্রতারিত হওয়া আপনার নিয়তি হয়ে দাঁড়ায়।', en: 'Appears thrice. Intense emotional detachment waves. High exposure to corporate backstabbing due to investing blind trust in broken models.' },
+                4: { bn: '৭ চারবার বা তার বেশি থাকা মানে চরম মানসিক বিভ্রান্তি। আপনি নিজের অস্তিত্ব নিয়ে সংশয়ে ভোগেন এবং বাস্তব পৃথিবীর সাথে সংযোগ বিচ্ছিন্ন করে ফেলেন।', en: 'Appears four or more times. Severe psychic disorientation. Complete dislocation from physical metrics, causing trust fragmentation.' }
+            },
+            8: {
+                title_bn: '⚖️ শনি উপাদান - সংখ্যা ৮ এর প্রভাব',
+                title_en: 'Saturn Element - Number 8 Metrics',
+                1: { bn: '৮ নম্বরটি চার্টে একবার রয়েছে। এটি আপনাকে চরম ধৈর্য, শৃঙ্খলা, নিয়মানুবর্তিতা এবং ধীরে ধীরে নিশ্চিত বড় সাফল্য দেয়।', en: 'Appears once. Solid patience metrics, uncompromising discipline, and guaranteed late-stage monumental success.' },
+                2: { bn: '৮ দুবার থাকার অর্থ আপনার কর্মক্ষমতা এবং সংগঠনের ক্ষমতা অসীম। বড় ইন্ডাস্ট্রিয়াল বা ফিন্যান্সিয়াল প্রজেক্ট পরিচালনায় আপনি ওস্তাদ।', en: 'Appears twice. Indestructible organizational velocity. Masters macro infrastructure configurations or heavy corporate networks effortlessly.' },
+                3: { bn: '৮ তিনবার থাকার ফলে আপনার জীবনে প্রতিটা প্রাপ্তিতে চরম বিলম্ব ঘটে। আপনি হাড়ভাঙা খাটুনি খাটলেও তার ক্রেডিট অন্য কেউ নিয়ে চলে যায়।', en: 'Appears thrice. Protracted Karmic delay patterns. Forces heavy manual physical inputs with delayed or compromised professional rewards.' },
+                4: { bn: '৮ চারবার বা তার বেশি থাকা মানে আপনার জীবন এক চরম পরীক্ষার ক্ষেত্র। আইনি মামলা, লোহা বা ব্যবসার লোকসান এবং দীর্ঘস্থায়ী হতাশায় জীবন জর্জরিত হতে পারে।', en: 'Appears four or more times. Severe Karmic exposure parameters. High risks of massive legal contentions or operational freezes.' }
+            },
+            9: {
+                title_bn: '🔥 মঙ্গল উপাদান - সংখ্যা ৯ এর প্রভাব',
+                title_en: 'Mars Element - Number 9 Metrics',
+                1: { bn: '৯ নম্বরটি চার্টে একবার রয়েছে। আপনার মধ্যে পর্যাপ্ত সাহস, উদ্দীপনা এবং পরোপকারী মানসিকতা বিদ্যমান।', en: 'Appears once. Optimal physical energy, healthy drive, and deep protectionist altruism.' },
+                2: { bn: '৯ দুবার থাকার কারণে আপনার বীরত্ব এবং জেদ দ্বিগুণ হয়ে যায়। আপনি যেকোনো কঠিন প্রতিযোগিতায় বিজয়ী হওয়ার অব্যর্থ শক্তি পান।', en: 'Appears twice. Double Martian drive. Grants unyielding psychological grit to demolish professional competition or secure critical seats.' },
+                3: { bn: '৯ তিনবার থাকার ফলে আপনার রাগ আগ্নেয়গিরির মতো বিস্ফোরক রূপ নেয়। রাগের মাথায় আপনি নিজের সাজানো ক্যারিয়ার বা সম্পর্ক এক সেকেন্ডে ধ্বংস করে দিতে পারেন।', en: 'Appears thrice. Highly explosive anger traits. Prone to severe bridge-burning actions and tactical blunders triggered by volatile fury.' },
+                4: { bn: '৯ চারবার বা তার বেশি থাকা মানে এক অবর্ণনীয় ফায়ার এনার্জি। যদি এই এনার্জিকে সঠিক কাজে ডাইভার্ট না করা হয়, তবে এটি মারাত্মক দুর্ঘটনা বা আইনি ধ্বংস ডেকে আনে। তবে একে সঠিক কেরিয়ারে লাগাতে পারলে আপনি সমস্ত বাধা ভেঙে ইতিহাস তৈরি করবেন।', en: 'Appears four or more times. Catastrophic fire accumulation. Demands radical career channeling into enforcement or physical operations to bypass internal combustions.' }
+            }
+        };
+
+        const driverDatabase = {
+            1: { bn: 'আপনার ড্রাইভার নম্বর হলো ১, যা রবির প্রতীক। আপনি জন্মগতভাবেই একজন উচ্চাকাঙ্ক্ষী লিডার বা নেতা। আপনার মধ্যে প্রখর আত্মসম্মানবোধ, স্বাধীনচেতা ভাব এবং শাসন করার এক স্বাভাবিক রাজকীয় গুণ রয়েছে।', en: 'Your Driver number is 1, ruled directly by the Sun. You are a natural-born leader, driven by intense self-respect and independence.', prof_bn: 'প্রশাসনিক কর্মকর্তা (IAS/WBCS), সরকারি প্রথম শ্রেণীর রাজপত্রিত পদ, সরকারি ঠিকাদারি ও ভারী টেন্ডার কন্টাক্ট, রাজনৈতিক শীর্ষ নেতৃত্ব ও দলীয় প্রধান, কর্পোরেট স্টার্ট-আপের প্রধান নির্বাহী কর্মকর্তা (CEO), হাই-প্রোফাইল স্ট্র্যাটেজিক ম্যানেজমেন্ট কনসালটেন্ট এবং প্রতিরক্ষা বিভাগের কমান্ডার পদ।', prof_en: 'Union/State Civil Services, Executive First Class Government Cadres, Large Scale Sovereign Tenders, Autonomous Enterprise Founders/CEOs, High-End Corporate Advisory.' },
+            2: { bn: 'আপনার ড্রাইভার নম্বর ২, যার অধিপতি হলো চন্দ্র। এটি আপনাকে অত্যন্ত শান্ত, সংবেদনশীল, কল্পনাপ্রবণ এবং শান্তিপ্রিয় হিসেবে গড়ে তুলেছে। আপনি যেকোনো সিদ্ধান্ত নেওয়ার আগে গভীরভাবে চিন্তা করতে এবং মানুষের মনস্তত্ত্ব বুঝতে ভালোবাসেন।', en: 'Your Driver number is 2, ruled by the Moon. This endows you with a deeply sensitive, imaginative, tactical, and peace-loving temperament.', prof_bn: 'আন্তর্জাতিক স্তরের আমদানি-রপ্তানি ব্যবসা (বিশেষত তরল পদার্থ, খনিজ তেল ও খাদ্যশস্য), ক্রিয়েটিভ জার্নালিজম ও সাহিত্য, চারুকলা ও অভিনয়, চিকিৎসা ও মনস্তাত্ত্বিক কন্সেলিং, পাবলিক রিলেশনস এবং মানবসম্পদ উন্নয়ন (HR Management)।', prof_en: 'Global Import-Export Cargo, Creative Investigative Journalism, Fine Arts, Theater & Cinema, Clinical Psychotherapy, and Corporate Human Resource Management.' },
+            3: { bn: 'আপনার ড্রাইভার নম্বর ৩, যার অধিপতি দেবগুরু বৃহস্পতি। আপনি হলেন মহাজাগতিক জ্ঞান, প্রজ্ঞা এবং দূরদর্শিতার আধার। যেকোনো জটিল বিষয় নিজে শিখে দ্রুত অপরকে বুঝিয়ে দেওয়ার এক অলৌকিক বাগ্মীতা আপনার মধ্যে থাকে।', en: 'Your Driver number is 3, ruled by Jupiter. You embody wisdom, structured knowledge, and expansive pedagogical eloquence.', prof_bn: 'উচ্চশিক্ষা প্রতিষ্ঠান পরিচালনা, প্রফেশনাল কর্পোরেট ট্রেনিং হাব, প্রিমিয়াম স্পোকেন ইংলিশ অ্যান্ড কমিউনিকেশন স্কিলস কোচিং ইনস্টিটিউট, হাই-এন্ড সম্পদ ব্যবস্থাপনা ও ফিন্যান্সিয়াল অডিটিং অ্যাডভাইসরি, সুপ্রিম কোর্ট বা হাইকোর্টের সিনিয়র লিগ্যাল প্র্যাকটিস এবং আন্তর্জাতিক মোটিভেশনাল স্পিকার।', prof_en: 'University Management, Executive Skill Development Hubs, Premium Spoken English Training Institutions, High-Yield Wealth Management, and Judicial Practices.' },
+            4: { bn: 'আপনার ড্রাইভার নম্বর ৪, যা রাহুর দ্বারা চালিত। আপনি চিরাচরিত নিয়মের বাইরে গিয়ে ভিন্ন কিছু করতে ভালোবাসেন। আপনি একজন আউট অফ দ্য বক্স থিংকার যিনি প্রথাগত নিয়মকে প্রতি পদে চ্যালেঞ্জ জানান।', en: 'Your Driver number is 4, operated by Rahu. You are an unorthodox thinker who challenges traditional status quos.', prof_bn: 'আইটি আর্কিটেকচার, আর্টিফিসিয়াল ইন্টেলিজেন্স (AI) ও এডভান্সড সফটওয়্যার ডেভেলপমেন্ট, ডিজিটাল মার্কেটিং স্ট্র্যাটেজি, এসইও (SEO) ও গ্রোথ হ্যাকিং উইং, মেগা রিয়েল এস্টেট ব্রোকারেজ নেটওয়ার্ক, গ্লোবাল ইভেন্ট আর্কিটেকচার এবং কাস্টমস্ বা সেন্ট্রাল ইনভেস্টিগেশন এজেন্সি।', prof_en: 'IT Systems Architecture, Generative AI & Software Development, Growth Hacking Syndicates, Macro Real Estate Infrastructure, and Sovereign Intelligence Bureau Operations.' },
+            5: { bn: 'আপনার ড্রাইভার নম্বর ৫, যার অধিপতি কমার্শিয়াল ইন্টেলিজেন্সের কারক বুধ। এটি সম্পূর্ণ নিউমারোলজির সবচেয়ে গতিশীল, চিরতরুণ এবং সুষম সংখ্যা। আপনার উপস্থিত বুদ্ধি, রসবোধ এবং ব্যবসায়িক যোগাযোগ দক্ষতা এককথায় অনন্য।', en: 'Your Driver number is 5, ruled by Mercury. This represents the absolute axis of balance and trade wit.', prof_bn: 'শেয়ার মার্কেট ও ট্রেডিং, ইনভেস্টমেন্ট ব্যাংকিং, কর্পোরেট কমার্স ডিল মেকিং, মেগা ই-কমার্স হাবস ও লজিস্টিকস নেটওয়ার্ক, প্রফেশনাল ভাষা শিক্ষা ও গ্লোবাল ট্রান্সলেশন উইং এবং আন্তর্জাতিক স্তরের কনসালটেন্সি বা লিয়াজোঁ (Liaison) ব্যবসা।', prof_en: 'Algorithmic Stock Trading, High-Yield Investment Banking, International Commerce, Megascale E-commerce Systems, Language Training Operations, and Corporate Brokerage Hubs.' },
+            6: { bn: 'আপনার ড্রাইভার নম্বর ৬, যার অধিপতি শুক্র। আপনি বৈষয়িক সুখ, নান্দনিক সৌন্দর্য, শিল্পকলা এবং গভীর পারিবারিক ও সামাজিক দায়িত্বের কারক। আপনার চারপাশের মানুষকে আকর্ষণ করার এক অদ্ভুত চৌম্বকীয় আভা রয়েছে।', en: 'Your Driver number is 6, ruled by Venus. You are the embodiment of harmony, luxury, deep family responsibility, and refined aesthetics.', prof_bn: 'হাই-এন্ড ফ্যাশন ডিজাইনিং ও  লাক্সারি জুয়েলারি ম্যানুফ্যাকচারিং ও রিটেইল চেইন, ফাইভ-স্টার হসপিটালিটি ও প্রিমিয়াম হোটেল রিসোর্ট ম্যানেজমেন্ট, ফিল্ম, গ্ল্যামার অ্যান্ড এন্টারটেইনমেন্ট মিডিয়া চ্যানেল, লাক্সারি ইন্টেরিয়র আর্কিটেকচার এবং কসমেটিকস ও প্রিমিয়াম বিউটি ওয়েলনেস সেক্টর।', prof_en: 'Haute Couture Fashion Design, Luxury Jewellery Conglomerates, Five-Star Hospitality Operations, Cinema & Glamour Channels, Premium Interior Architecture.' },
+            7: { bn: 'আপনার ড্রাইভার নম্বর ৭, যা কেতুর দ্বারা নিয়ন্ত্রিত। আপনি একজন সহজাত গবেষক, মনস্তাত্ত্বিক অ্যানালিস্ট এবং মিস্টিক চিন্তাবিদ। ঘটনার গভীরে গিয়ে সত্য উদঘাটন করা আপনার মজ্জাগত স্বভাব।', en: 'Your Driver number is 7, governed deeply by Ketu. You are a natural researcher, mystic analyzer, and detached seeker.', prof_bn: 'মহাজাগতিক ও বৈজ্ঞানিক গবেষণা, জ্যোতিষশাস্ত্র, নিউমারোলজি ও গুহ্য বিদ্যায় প্রফেশনাল কনসালটেন্সি, ক্লিনিক্যাল সাইকোলজি ও মেটাফিজিক্যাল হিলিং আর্টস, আইটি সাইবার সিকিউরিটি কোডিং এবং রাষ্ট্রীয় গোয়েন্দা উইং।', prof_en: 'Scientific R&D Operations, Esoteric Numerology Consulting, Metaphysical Healing Arts, Advanced Cyber Security, and Investigation Cells.' },
+            8: { bn: 'আপনার ড্রাইভার নম্বর ৮, যার অধিপতি শনি। আপনার জীবন লড়াই, কঠোর পরিশ্রম এবং অদম্য ধৈর্যের এক মহাকাব্য। আপনার প্রতিটি বড় সাফল্য ইটের ওপর ইট গেঁথে তৈরি করা দীর্ঘস্থায়ী এক রাজকীয় সাম্রাজ্য।', en: 'Your Driver number is 8, managed by Saturn. Your life blueprint is built on relentless hard work and massive cosmic patience.', prof_bn: 'ভারী ধাতু ও কয়লা খনি শিল্প, মেগা রিয়েল এস্টেট ইনফ্রাস্ট্রাকচার অ্যান্ড প্রপার্টি ডেভেলপমেন্ট, কর্পোরেট আইন ও সুপ্রিম কোর্ট জুডিশিয়াল প্র্যাকটিস, ভারী উৎপাদনকারী কারখানার মালিকানা এবং আন্তর্জাতিক লজিস্টিকস, শিপিং ও ট্রান্সপোর্ট বুরো।', prof_en: 'Metallurgy & Heavy Mining Corporations, Macro Real Estate Infrastructure, Higher Judicial Practices, Heavy Manufacturing Plants, and Global Logistics Conglomerates.' },
+            9: { bn: 'আপনার ড্রাইভার নম্বর ৯, যার অধিপতি মঙ্গল। আপনি অফুরন্ত জীবনীশক্তি, শারীরিক এনার্জি, অদম্য সাহস, উদ্দীপনা এবং তীব্র মানবিক প্রোটেকশনিস্ট মানসিকতার প্রতীক। অন্যায়ের বিরুদ্ধে ঢাল হয়ে দাঁড়িয়ে দুর্বলকে রক্ষা করা আপনার স্বভাব।', en: 'Your Driver number is 9, governed by Mars. You pulse with raw physical energy, explosive drive, and deep humanitarian protectionist instincts.', prof_bn: 'সেনাবাহিনী ও কমব্যাট পুলিশ ফোর্স প্রধান, জটিল কার্ডিও/নিও-সার্জারি ও চিকিৎসা হাব, প্রফেশনাল অ্যাথলেটিক্স ও স্পোর্টস অ্যাকাডেমি, ইন্ডাস্ট্রিয়াল ফায়ার সেফটি ইঞ্জিনিয়ারিং, আন্তর্জাতিক শেফ ও প্রিমিয়াম হোটেল কিচেন আর্কিটেকচার এবং মেগা সোশ্যাল ওয়েলফেয়ার বা আন্তর্জাতিক এনজিও পরিচালনা।', prof_en: 'Military & Combat Police Forces, Complex Neosurgery operations, Professional Athletics Mastery, Industrial Safety Engineering, Premium Culinary Architecture.' }
+        };
+
+        const riskOpportunitiesDatabase = {
+            1: { opp_bn: 'সরকারি টেন্ডার ও নিজস্ব ব্র্যান্ড খাড়া করার সুযোগ।', opp_en: 'Premium avenues unfold in government contracts and brand building.', risk_bn: 'অহংকারের কারণে অংশীদারিত্ব বা পার্টনারশিপ ভেঙে যাওয়ার ঝুঁকি।', risk_en: 'High vulnerability toward operational ego clashes.' },
+            2: { opp_bn: 'যৌথ উদ্যোগ, ক্রিয়েটিভ পার্টনারশিপ ও মিডিয়া প্রজেক্টে বিপুল উন্নতি।', opp_en: 'Exceptional investment rewards stack up in joint ventures and creative media fields.', risk_bn: 'অন্যের ওপর অতি-আবেগীয় অন্ধ বিশ্বাসের কারণে আর্থিক ধোকা খাওয়ার ঝুঁকি।', risk_en: 'Prone to financial drain caused by over-emotional confidence vectors.' },
+            3: { opp_bn: 'শিক্ষা প্রতিষ্ঠান সম্প্রসারণ ও কন্সালটেন্সির সুযোগ।', opp_en: 'Global scale expansion in coaching infrastructure.', risk_bn: 'অতিরিক্ত আত্মবিশ্বাসের কারণে লাভজনক প্রজেক্ট মাঝপথে বন্ধের ঝুঁকি।', risk_en: 'Stagnation loops caused by intellectual arrogance.' },
+            4: { opp_bn: 'ডিজিটাল এসেট ও আইটি ইনোভেশন থেকে বিপুল ধনলাভের সুযোগ।', opp_en: 'Astronomical wealth accumulation via tech innovations.', risk_bn: 'বেআইনি শর্টকাট নেওয়ার কারণে হঠাৎ বড় ধরনের দেউলিয়া হওয়ার ঝুঁকি।', risk_en: 'High threat configurations regarding dynamic bankruptcies.' },
+            5: { opp_bn: 'ট্রেডিং ও ই-commerce ব্যবসার মাধ্যমে দ্রুত ক্যাশ-ফ্লো জেনারেট।', opp_en: 'Flawless execution capabilities in short-cycle trade matrices.', risk_bn: 'একই সাথে একাধিক নৌকায় পা দেওয়ার কারণে ফোকাস নষ্টের রিস্ক।', risk_en: 'Extreme risk of capital dispersion due to multi-niche ventures.' },
+            6: { opp_bn: 'গ্ল্যামার ওয়ার্ল্ড ও বিলাসবহুল রিয়েল এস্টেট থেকে ফান্ডিং পাওয়ার সুযোগ।', opp_en: 'Elite capability to attract capital funding.', risk_bn: 'ব্র্যান্ডেড জিনিসের পেছনে অতিরিক্ত অপ্রয়োজনীয় খরচের ঝুঁকি।', risk_en: 'Vulnerable to massive capital drain via extravagant acquisitions.' },
+            7: { opp_bn: 'গবেষণামূলক পেটেন্ট লাভ ও ডেটা অ্যানালিটিক্স সেক্টরে আন্তর্জাতিক খ্যাতি।', opp_en: 'Unmatched possibilities in securing proprietary patents.', risk_bn: 'ব্যবসায়িক অংশীদার বা বন্ধুদের দ্বারা পেছন থেকে ছুরিকাঘাত হওয়ার ঝুঁকি।', risk_en: 'High threat of corporate backstabbing from trusted insiders.' },
+            8: { opp_bn: 'মাইনিং ও ভারী শিল্পের মাধ্যমে জীবনের উত্তরার্ধে একচ্ছত্র সাম্রাজ্য।', opp_en: 'Monopolistic asset construction within heavy industries.', risk_bn: 'দীর্ঘস্থায়ী আইনি মামলায় জড়িয়ে পড়ার প্রবল ঝুঁকি।', risk_en: 'High threat of protracted corporate litigation loops.' },
+            9: { opp_bn: 'মেডিক্যাল হাব এবং এনার্জিটিক প্রজেক্টে নেতৃত্ব দেওয়ার সুযোগ।', opp_en: 'Commanding authority over elite healthcare networks.', risk_bn: 'অতিরিক্ত রাগের কারণে মারাত্মক শারীরিক দুর্ঘটনা ও রক্তপাতের ঝুঁকি।', risk_en: 'Catastrophic vulnerability toward violent physical accidents.' }
+        };
+
+        const healthDatabase = {
+            1: { bn: 'হৃদরোগ, উচ্চ রক্তচাপ এবং চোখের সমস্যা। সূর্যোদয়ের সময় প্রাণায়াম করুন।', en: 'Cardiovascular complications, hypertension, and ocular stress.' },
+            2: { bn: 'মানসিক অস্থিরতা, অনিদ্রা, গ্যাসট্রিক এবং জলবাহিত রোগ। তরল ও ঠান্ডা খাবার বেশি খান।', en: 'Anxiety traces, chronic insomnia, stomach sensitivity, and fluid imbalances.' },
+            3: { bn: 'লিভারের সমস্যা, ওজন বৃদ্ধি, ডায়াবেটিস এবং কোলেস্টেরল। মিষ্টি বর্জন করুন।', en: 'Hepatic congestion, fast obesity acceleration, and diabetes.' },
+            4: { bn: 'শনাক্ত করা কঠিন এমন রহস্যময় রোগ এবং স্নায়বিক দুর্বলতা। ডিটক্সিফিকেশন জরুরি।', en: 'Undiagnosed phantom illnesses, severe central nervous breakdown.' },
+            5: { bn: 'অতিরিক্ত দুশ্চিন্তার কারণে নার্ভাস ব্রেকডাউন এবং হজমের গোলমাল। পর্যাপ্ত ঘুমান।', en: 'Anxiety-driven nervous system crashes and chronic IBS.' },
+            6: { bn: 'কিডনি ও মূত্রনালীর সমস্যা এবং ডায়াবেটিস। ফাস্টফুড নিয়ন্ত্রণ করুন।', en: 'Renal path vulnerabilities and severe type-2 diabetes risks.' },
+            7: { bn: 'চর্মরোগ, অ্যালার্জি এবং মেরুদণ্ডের সমস্যা। রক্ত পরীক্ষা নিয়মিত করান।', en: 'Chronic skin eczema and spinal cord posture deviations.' },
+            8: { bn: 'বাতব্যথা, কোষ্ঠকাঠিন্য এবং দাঁত বা হাড়ের ক্ষয়। সর্ষের তেল মালিশ শুভ।', en: 'Severe bone arthritis and chronic lower gut constipation.' },
+            9: { bn: 'রক্তের অশুদ্ধি, পাইলস, অগ্নিদগ্ধ হওয়া এবং ফিজিক্যাল ইনজুরি। আগুন থেকে সতর্ক থাকুন।', en: 'Blood toxin loading, acute hemorrhoids, and high fire-burn exposures.' }
+        };
+
+        const masterLifeCalculations = {
+            1: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> তীব্র আত্মসম্মানবোধের কারণে ছোটবেলা থেকেই স্বাধীনভাবে পথ চলার চেষ্টা করেন। পড়াশোনা বা যেকোনো সামাজিক ক্ষেত্রে আপনার নেতৃত্ব দেওয়ার সহজাত রাজকীয় গুণ প্রকাশ পায়। <br><strong>মধ্যজীবন ও কর্মোস্থান (২৪-৪৫ বছর):</strong> এটি আপনার জীবনের সর্বাধিক গতিশীল সময়। কঠোর পরিশ্রমের মাধ্যমে কেরিয়ারে বড় মাপের প্রতিষ্ঠা লাভ করবেন। ২৬, ৩৫ এবং ৪৪ বছর বয়সে ভাগ্যের বড় এবং ইতিবাচক টার্নিং পয়েন্ট আসবে। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> এই বয়সে আপনার ক্যারিয়ারে এক গৌরবময় ও সার্থক রূপান্তর ঘটবে। আপনি একটি সুপ্রতিষ্ঠিত সিস্টেমের প্রধান মেন্টর বা উপদেষ্টা (Strategic Guide) হিসেবে আত্মপ্রকাশ করবেন। সমাজ ও সংস্থায় উচ্চ সম্মান বজায় থাকার পাশাপাশি আপনার আর্থিক স্থায়িত্ব ও বৈষয়িক সুখ উপচে পড়বে।', en: '<strong>Early Phase (Ages 1-23):</strong> Marked by high independence and natural leadership prominence.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Relentless execution leads to high-scale professional status. Upward loops hit at 26 and 35.<br><strong>Mature Phase (Ages 46+):</strong> Transitions smoothly into a supreme boardroom advisor or institution mentor, securing massive generational wealth and public prestige.' },
+            2: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> অত্যন্ত আবেগপ্রবণ, কল্পনাপ্রবণ এবং অন্তর্মুখী কাটবে। পড়াশোনায় মনোযোগের উত্থান-পতন থাকলেও চারুকলা বা সাহিত্যে দারুণ আগ্রহ প্রকাশ পায়। মায়ের সাথে গভীর মানসিক সংযোগ থাকে। <br><strong>মধ্যজীবন ও কর্মোস্থান  (২৪-৪৫ বছর):</strong> কৌশলগত পার্টনারশিপ এবং যৌথ উদ্যোগের মাধ্যমে কেরিয়ারে বড় মাপের আর্থিক উত্থান ঘটবে। ২৯, ৩৮ এবং ৪৭ বছর বয়সে প্রফেশনাল লাইফে চমৎকার পসিটিভ শিফট দেখা দেবে। মানসিক পরিপক্কতা আসবে। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> আপনার কর্মজীবনে এক পরম শান্তিপূর্ণ ও সার্থক রূপান্তর আসবে। সক্রিয় দৌড়ঝাঁপ কমিয়ে আপনি একজন পরম শ্রদ্ধেয় গাইড বা মনস্তাত্ত্বিক পরামর্শদাতা হিসেবে কাজ করবেন। আপনার সৃষ্টিশীল কাজ বিশ্বজুড়ে সমাদৃত হবে এবং মানসিক ও জাগতিক শান্তি পূর্ণ মাত্রায় বজায় থাকবে।', en: '<strong>Early Phase (Ages 1-23):</strong> Deeply creative visual intelligence with high domestic empathy.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Alliances and syndicates unlock commercial wealth channels at 29 and 38.<br><strong>Mature Phase (Ages 46+):</strong> Evolves beautifully into a highly respected consulting trajectory, leaving behind an immortal creative legacy.' },
+            3: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> জ্ঞান অন্বেষণ, কৌতূহল এবং পড়াশোনায় দারুণ কাটে। ক্লাসে বা বন্ধুমহলে বুদ্ধিমান এবং বাগ্মী হিসেবে পরিচিতি পান। গুরুজন ও শিক্ষকদের বিশেষ স্নেহ লাভ করেন। <br><strong>মধ্যজীবন ও কর্মোস্থান (২৪-৪৫ বছর):</strong> কর্পোরেট কনসালটেন্সি, শিক্ষা, স্কিল ট্রেনিং বা আর্থিক সেক্টরে নিজের একচ্ছত্র রাজত্ব তৈরি করতে পারেন। ৩০, ৩৯ এবং ৪৮ বছর বয়সে জীবনে বড় মাপের বাণিজ্যিক সাফল্য এবং হিউজ ফিন্যান্সিয়াল গ্রোথ আসবে। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> আপনার সক্রিয় ক্যারিয়ার এক পরম পূজনীয় ও আধ্যাত্মিক পথপ্রদর্শকের ভূমিকায় উন্নীত হবে। আপনি বড় বড় প্রতিষ্ঠানের অভিভাবক বা প্রধান উপদেষ্টা (Chief Advisor) হিসেবে দায়িত্ব পালন করবেন। সন্তান সুখ এবং পারিবারিক সমৃদ্ধি আজীবন আপনার সুরক্ষাকবচ হয়ে থাকবে।', en: '<strong>Early Phase (Ages 1-23):</strong> Academic excellence powered by high conceptual curiosity.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Phenomenal business growth across training or corporate structures. Turning loops anchor near 30 and 39.<br><strong>Mature Phase (Ages 46+):</strong> Scales into an elite legacy guide or trusted institutional patron with absolute domestic stability.' },
+            4: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> জীবনে আকস্মিক পরিবর্তন এবং কিছুটা অপ্রথাগত বিদ্রোহী স্বভাব দেখা যায়। গতানুগতিক মুখস্থ শিক্ষা পদ্ধতির বাইরে গিয়ে প্র্যাক্টিক্যাল বা কারিগরি বিষয়ে কাজ করার সহজাত চেষ্টা থাকে। <br><strong>মধ্যজীবন ও কর্মোস্থান (২৪-৪৫ বছর):</strong> আধুনিক প্রযুক্তি, রিয়েল এস্টেট বা ইউনিক স্টার্ট-আপ আইডিয়ার মাধ্যমে হঠাৎ আকাশচুম্বী ও নাটকীয় সাফল্য পাবেন। ৩১, ৪০ এবং ৪৯ বছর বয়সে জীবনে বড় মোড় আসবে। স্ট্রাগল থাকলেও বস্তুগত গেইন উপচে পড়বে। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> সমস্ত প্রাথমিক অস্থিরতা পার করে আপনার ক্যারিয়ার এক নিরেট ও দীর্ঘস্থায়ী স্থাবর সম্পত্তিতে রূপান্তর লাভ করবে। আপনি কোনো বড় এন্টারপ্রাইজের বা ডিজিটাল অ্যাসেট সাম্রাজ্যের একচ্ছত্র মালিক (Sovereign System Owner) হিসেবে স্থায়ীভাবে আয়েশি ও নিরাপদ জীবনযাপন করবেন।', en: '<strong>Early Phase (Ages 1-23):</strong> Non-conformist educational patterns with a knack for technical applications.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Sudden sky-rocketing wealth blocks generated via speculative or technological infrastructures at 31 and 40.<br><strong>Mature Phase (Ages 46+):</strong> Post navigating dynamic shifts, solid real estate complexes or digital asset structures are permanently established for an upscale lifestyle.' },
+            5: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> অত্যন্ত চঞ্চল, কৌতুকপ্রিয় এবং তীক্ষ্ণ বুদ্ধিমান স্বভাবের হন। বন্ধুদের সাথে নেটওয়ার্কিং করতে ভালোবাসেন। বহুমুখী প্রতিভা এবং ভাষা শিক্ষার প্রারম্ভিক দক্ষতা প্রকাশ পায়। <br><strong>মধ্যজীবন ও কর্মোস্থান  (২৪-৪৫ বছর):</strong> ব্যবসা-বাণিজ্য, ই-কমার্স এবং গ্লোবাল যোগাযোগের মাধ্যমে বিপুল ধনসম্পদ ও ক্যাশ-ফ্লো অর্জন করবেন। ২৩, ৩২ এবং ৪১ বছর বয়সে ভাগ্যের বড় দরজা খুলবে। একাধিক আয়ের উৎস নিজে থেকেই তৈরি হবে। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> আপনার হাড়ভাঙা দৈনিক পরিশ্রমের ক্যারিয়ারটি এক অসাধারণ প্যাসিভ ইনকাম ও মেন্টরশিপ মডেলে রূপান্তরিত হবে। আপনি সরাসরি মাঠে না নেমেও আপনার তৈরি করা অটোমেটেড সিস্টেম এবং কনসালটেন্সি নেটওয়ার্কের সাহায্যে রাজকীয়, গতিশীল ও স্বাধীন সচ্ছল জীবন উপভোগ করবেন।', en: '<strong>Early Phase (Ages 1-23):</strong> Highly adaptive, sharp verbal processing, and early business networking traits.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Mass financial gains harvested through global trade and digital workflows. Vertical spikes hit at 32 and 41.<br><strong>Mature Phase (Ages 46+):</strong> Active daily field operations transition seamlessly into high-end passive monetization models and premium boardroom consultancy.' },
+            6: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> আকর্ষণীয় ব্যক্তিত্ব, জৌলুস এবং বিলাসবহুল জিনিসের প্রতি প্রারম্ভিক ঝোঁক থাকে। বন্ধুমহল বড় হয় এবং কলা, ডিজাইন বা গ্ল্যামার বিভাগে প্রভূত আগ্রহ থাকে। <br><strong>মধ্যজীবন ও কর্মোস্থান  (২৪-৪৫ বছর):</strong> বৈবাহিক লাইফ এবং লাক্সারি কমার্স বা ক্রিয়েটিভ বিজনেসের মাধ্যমে চরম ভাগ্যোন্নতি ঘটে। ২৪, ৩৩ এবং ৪২ বছর বয়সে নিজের ব্র্যান্ড ভ্যালু ও বৈষয়িক সুখের শীর্ষস্থানে পৌঁছাবেন। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> আপনার কেরিয়ার এক পরম লাক্সারি ও পারিবারিক স্বাচ্ছন্দ্যে রূপান্তর নেবে। আপনাকে আর অর্থের জন্য স্ট্রাগল করতে হবে না, বরং আপনার নামেই ব্যবসা চলবে। অত্যন্ত বিলাসবহুল, আনন্দময় ও সম্মানিত জীবন কাটবে এবং সমাজের অভিজাত মহলে আপনার নাম স্থায়ীভাবে প্রতিষ্ঠিত থাকবে।', en: '<strong>Early Phase (Ages 1-23):</strong> Charismatic presence with early attachment to premium design elements.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Dynamic marriage alignments and premium commerce deliver heavy brand scaling near 33 and 42.<br><strong>Mature Phase (Ages 46+):</strong> Elite asset-heavy domestic landscape where your institutional brand value continues to yield capital automatically.' },
+            7: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> একাকীত্ব ভাব, গম্ভীর স্বভাব এবং গভীর চিন্তা করার মানসিকতা তৈরি হয়। গূঢ় রহস্য, অ্যানালিটিক্স বা আইটি-টেকনিক্যাল লাইনে প্রভূত আগ্রহ দেখা যায়। <br><strong>মধ্যজীবন ও কর্মোস্থান (২৪-৪৫ বছর):</strong> বৈজ্ঞানিক আবিষ্কার, গভীর রিসার্চ, আধ্যাত্মিকতা বা আইটি সেক্টরে আন্তর্জাতিক স্তরে নিজেকে বড় প্ল্যাটফর্মে প্রমাণ করবেন। ২৫, ৩৪ এবং ৪৩ বছর বয়সে আপনার ইনটুইশন ও প্রফেশনাল লাইফে বড় মাপের বিপ্লব ঘটবে। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> আপনার কর্মজীবন এক পরম আধ্যাত্মিক ও দার্শনিক পথপ্রদর্শকের ভূমিকায় উন্নীত হবে। আপনি বিশ্বজুড়ে বড় বড় আধ্যাত্মিক বা বৈজ্ঞানিক সংস্থার পরম পূজনীয় উপদেষ্টা বা মেন্টর হিসেবে দায়িত্ব নেবেন। আপনার মানসিক ও আধ্যাত্মিক ঐশ্বর্য উপচে পড়বে।', en: '<strong>Early Phase (Ages 1-23):</strong> Isolated, deeply skeptical, and analytical research behaviors.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Global credits locked in specialized research or technology frameworks at 34 and 43.<br><strong>Mature Phase (Ages 46+):</strong> Transforms globally into an elite mystic or analytical patron, possessing deep inner enlightenment and wealth.' },
+            8: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> শৈশব থেকেই কোনো না কোনো গুরুগম্ভীর পারিবারিক বা সামাজিক দায়িত্ব কাঁধে চলে আসে। চরম লড়াই এবং পরিশ্রমের মধ্য দিয়ে পড়াশোনা ও কেরিয়ারের নিরেট ভিত গড়তে হয়। <br><strong>মধ্যজীবন ও কর্মোস্থান  (২৪-৪৫ বছর):</strong> এটি আপনার পরম ধৈর্য পরীক্ষার সময়। ধীর গতিতে কিন্তু নিশ্চিতভাবে আপনি কর্পোরেট বা উচ্চ মেগা-ইন্ডাস্ট্রিয়াল কাঠামোর শীর্ষ চূড়ায় আরোহণ করবেন। ২৬, ৩৫ এবং ৪৪ বছর বয়সের পর (বিশেষ করে ৩৬ বছর বয়সের পর) চরম ভাগ্যোন্নতি ঘটবে। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> আপনার সারা জীবনের অক্লান্ত পরিশ্রম এই বয়সে এসে এক বিশাল ও অজেয় কর্পোরেট সাম্রাজ্যে রূপান্তর লাভ করবে। আপনি অগাধ স্থাবর সম্পত্তি, ভারী কারখানা বা প্রপার্টি কমপ্লেক্সের একচ্ছত্র অধিপতি (Sovereign Industrialist) হিসেবে রাজকীয় ক্ষমতা ও স্থায়ী প্রাচুর্য ভোগ করবেন।', en: '<strong>Early Phase (Ages 1-23):</strong> Structural obligations or systemic educational delays forced early maturity.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Relentless infrastructure development post age 36 with massive consolidations near 44.<br><strong>Mature Phase (Ages 46+):</strong> Commands a massive monopolistic corporate or real estate network in complete security.' },
+            9: { bn: '<strong>শৈশব ও প্রাথমিক জীবন (১-২৩ বছর):</strong> অত্যন্ত সাহসী, ছটফটে ও এনার্জিটিক স্বভাবের হন। খেলাধুলো বা ফিজিক্যাল অ্যাক্টিভিটিতে নাম করেন। অন্যায়ের প্রতিবাদ করার এক জন্মগত যোদ্ধা মানসিকতা আপনার মধ্যে তৈরি হয়। <br><strong>মধ্যজীবন ও কর্মোস্থান  (২৪-৪৫ বছর):</strong> কোনো বড় মহৎ মিশন, সামরিক, প্রশাসনিক বা জটিল সার্জিক্যাল প্রজেক্টের লিডারশিপ নেবেন। সমাজে বিশাল নাম ছড়াবে। ২৭, ৩৬ এবং ৪৫ বছর বয়সে আপনার পরাক্রম ও সাফল্যের শিখর দেখা যাবে। <br><strong>উত্তর জীবন ও পরিণতি (৪৬+ বছর):</strong> আপনার লড়াকু ক্যারিয়ারটি এক পরম মহৎ ও বিশ্বস্ত আন্তর্জাতিক দাতব্য বা হিউম্যানিটারিয়ান প্রজেক্টের প্রধান অভিভাবকের (Chief Patron) ভূমিকায় উন্নীত হবে। পরোপকার, বড় ট্রাস্ট পরিচালনা এবং সামাজিক কল্যাণমূলক কাজের এক রাজকীয় সাম্রাজ্যের মাধ্যমে আপনি অমর হয়ে থাকবেন।', en: '<strong>Early Phase (Ages 1-23):</strong> Raw vital endurance templates combined with competitive sports prominence.<br><strong>Mid-Life Acceleration (Ages 24-45):</strong> Commands massive enforcement grids or corporate operations with global fame at 36 and 45.<br><strong>Mature Phase (Ages 46+):</strong> Heads elite international humanitarian trusts or philanthropic bodies, leaving an immortal financial and social legacy.' }
+        };
+
+        const planeMetadata = [
+            { id: '492', name: 'মানসিক ও বুদ্ধি সমতল (৪, ৯, ২)', numbers: [4, 9, 2], full_bn: 'স্মৃতিশক্তি অসাধারণ এবং মেন্টাল স্ট্র্যাটেজি অত্যন্ত তীক্ষ্ণ।', full_en: 'Superior retention memory and strategic precision.', part_bn: 'সংখ্যা [MISSING] চার্টে অসম্পূর্ণ থাকায় শেষ মুহূর্তে কিছুটা মানসিক ক্লান্তি বা ব্লকের সম্মুখীন হন।', part_en: 'Due to missing [MISSING], you experience end-moment mental fatigue.', remedy_bn: 'উত্তর-পূর্ব দিকে ক্রিস্টাল পিরামিড রাখুন এবং প্রতিদিন ধ্যান করুন।', remedy_en: 'Place a clear quartz crystal pyramid in the North-East zone.' },
+            { id: '357', name: 'আবেগ ও ষষ্ঠ ইন্দ্রিয় সমতল (৩, ৫, ৭)', numbers: [3, 5, 7], full_bn: 'আপনার গ্রিডে ৩, ৫ এবং ৭ এর সম্পূর্ণ উপস্থিতি রয়েছে যা পরম শুভ সিলভার লাইন তৈরি করেছে। আপনার ষষ্ঠ ইন্দ্রিয় অসাধারণ কাজ করে এবং মানসিক ভারসাম্য দারুণ।', full_en: 'The Silver Line of Intuition is fully active and powerful.', part_bn: 'সংখ্যা [MISSING] অসম্পূর্ণ থাকায় সহজে মিষ্টি কথায় বিশ্বাস করে ধোকা খান।', part_en: 'Because [MISSING] is missing, you absorb external emotions far too quickly.', remedy_bn: 'হাতে ল্যাপিস লাজুলি ব্রেসলেট পরুন এবং গরুকে ঘাস খাওয়ান।', remedy_en: 'Wear a Lapis Lazuli crystal bracelet on your left wrist.' },
+            { id: '816', name: 'বাস্তবতা সমতল (৮, ১, ৬)', numbers: [8, 1, 6], full_bn: 'আপনার গ্রীডে ৮, ১ এবং ৬ সম্পূর্ণ রয়েছে। আপনি অত্যন্ত বাস্তববাদী, কঠোর পরিশ্রমী এবং ব্যবসায়িক দিক থেকে সফল।', full_en: 'The Practical Execution Plane is 100% complete.', part_bn: 'সংখ্যা [MISSING] অসম্পূর্ণ থাকায় খাটুনি হলেও সঠিক সময়ে আর্থিক সুযোগ মেলে না।', part_en: 'Lacking [MISSING] forces you to face regular delays in receiving rewards.', remedy_bn: 'প্রফেশনাল মেটাল ওয়াচ পরিধান করুন এবং শনিবারে দান করুন।', remedy_en: 'Wear a high-quality stainless steel metal watch on your wrist.' },
+            { id: '951', name: 'ইচ্ছাশক্তি সমতল (৯, ৫, ১)', numbers: [9, 5, 1], full_bn: 'আপনার ইচ্ছাশক্তি ইস্পাতের মতো শক্ত। অসম্ভবকে সম্ভব করতে পারেন।', full_en: 'The Willpower Line is perfectly solid.', part_bn: 'সংখ্যা [MISSING] অসম্পূর্ণ থাকার কারণে উদ্যম খুব দ্রুত শুরু হলেও মাঝপথে ধৈর্য হারান।', part_en: 'Due to the absence of [MISSING], your initial hype dies down rapidly.', remedy_bn: 'দক্ষিণ দিকে একটি... লাল বাল্ব জ্বালিয়ে রাখুন এবং লাল রুমাল সাথে রাখুন।', remedy_en: 'Ignite a small crimson bulb in the Southern corner.' },
+            { id: '438', name: 'পরিকল্পনা সমতল (৪, ৩, ৮)', numbers: [4, 3, 8], full_bn: 'যেকোনো কাজের সুদূরপ্রসারী ও নিখুঁত দূরদর্শী প্ল্যানিং করতে ওস্তাদ।', full_en: 'The Thought Plane is fully functional.', part_bn: 'সংখ্যা [MISSING] অসম্পূর্ণ থাকায় পরিকল্পনা খাতায়-কলমেই রয়ে যায়, সাজাতে ব্যর্থ হন।', part_en: 'Lacking [MISSING] causes your brilliant ideas to remain trapped on paper.', remedy_bn: 'বাড়ির উত্তর-পূর্ব কোণে তুলসী গাছ লাগান এবং গণেশজীর মূর্তি রাখুন।', remedy_en: 'Plant a holy basil in the North-East zone.' },
+            { id: '276', name: 'কর্মক্ষমতা সমতল (২, ৭, ৬)', numbers: [2, 7, 6], full_bn: 'এই লাইনটি সম্পূর্ণ সক্রিয় থাকলে জাতক অত্যন্ত দ্রুত গতিতে যেকোনো পরিকল্পনাকে বাস্তবে রূপদান করতে পারেন।', full_en: 'The Action Axis is operational, granting extreme executive speed.', part_bn: 'সংখ্যা [MISSING] অসম্পূর্ণ থাকায় আপনি কেবল অনেক পরিকল্পনা করেন, কিন্তু সঠিক সময়ে পদক্ষেপ বা অ্যাকশন নিতে কিছুটা দ্বিধা বা জড়তা কাজ করে।', part_en: 'Lacking [MISSING] locks you into structural procrastination.', remedy_bn: 'ডান কবজিতে রূপোর ব্রেসলেট পরুন এবং কুকুরকে খাবার খাওয়ান।', remedy_en: 'Wear a heavy solid silver band on your right arm.' },
+            { id: '456', name: 'স্বর্ণালী রেখা (৪, ৫, ৬)', numbers: [4, 5, 6], full_bn: 'গ্রীডে রাজযোগ সৃষ্টিকারী ৪, ৫, ৬ সম্পূর্ণ উপস্থিত। চরম সমৃদ্ধি ও বস্তুগত সুখ অবধারিত।', full_en: 'The Golden Line of absolute wealth is 100% active.', part_bn: 'সংখ্যা [MISSING] অসম্পূর্ণ থাকায় লক্ষ্মী আসলেও উপার্জনের চেয়ে অহেতুক খরচ বেড়ে যায়।', part_en: 'Because [MISSING] is missing, you face massive cash-drain issues.', remedy_bn: 'শুক্রবার লক্ষ্মী দেবীর সামনে ঘিয়ের প্রদীপ জ্বালান এবং ব্রহ্মস্থান পরিষ্কার রাখুন।', remedy_en: 'Light a clarified butter lamp before Goddess Lakshmi on Fridays.' },
+            { id: '258', name: 'স্থাবর সম্পত্তি সমতল (২, ৫, ৮)', numbers: [2, 5, 8], full_bn: 'মাল্টিপল প্রপার্টি বা জমি-বাড়ির মালিক হওয়া নিশ্চিত।', full_en: 'The Earth Property Element line is fully aligned.', part_bn: 'সংখ্যা [MISSING] অসম্পূর্ণ থাকায় প্রপার্টি কিনতে আইনি জটিলতা বা বাধা আসে।', part_en: 'Due to missing [MISSING], you encounter registration delays or obstacles.', remedy_bn: 'পিতলের পাত্রে পরিষ্কার মাটি ভরে ঘরের দক্ষিণ-পশ্চিম কোণে রাখুন।', remedy_en: 'Keep clean yellow soil in a brass bowl in the South-West corner.' }
+        ];
+
+        const planetProperties = {
+            1: { planet: 'Sun (সূর্য)', color: 'Yellow, Gold (হলুদ, সোনালী)', day: 'Sunday (রবিবার)', year: '2026, 2035' },
+            2: { planet: 'Moon (চন্দ্র)', color: 'White, Cream (সাদা, ক্রিম)', day: 'Monday (সোমবার)', year: '2029, 2038' },
+            3: { planet: 'Jupiter (বৃহস্পতি)', color: 'Yellow (হলুদ)', day: 'Thursday (বৃহস্পতিবার)', year: '2030, 2039' },
+            4: { planet: 'Rahu (রাহু)', color: 'Light Blue (হালকা নীল)', day: 'Saturday (শনিবার)', year: '2031, 2040' },
+            5: { planet: 'Mercury (বুধ)', color: 'Green (সবুজ)', day: 'Wednesday (বুধবার)', year: '2032, 2041' },
+            6: { planet: 'Venus (শুক্র)', color: 'White, Off-White (চকচকে সাদা)', day: 'Friday (শুক্রবার)', year: '2033, 2042' },
+            7: { planet: 'Ketu (কেতু)', color: 'Light Green, Grey (ধূসর)', day: 'Tuesday (মঙ্গলবার)', year: '2034, 2043' },
+            8: { planet: 'Saturn (শনি)', color: 'Dark Blue (গাঢ় নীল)', day: 'Saturday (শনিবার)', year: '2026, 2035' },
+            9: { planet: 'Mars (মঙ্গল)', color: 'Red (লাল)', day: 'Tuesday (মঙ্গলবার)', year: '2027, 2036' }
+        };
+
+        const zodiacIcons = {
+            'Aries': '♈',
+            'Taurus': '♉',
+            'Gemini': '♊',
+            'Cancer': '♋',
+            'Leo': '♌',
+            'Virgo': '♍',
+            'Libra': '♎',
+            'Scorpio': '♏',
+            'Sagittarius': '♐',
+            'Capricorn': '♑',
+            'Aquarius': '♒',
+            'Pisces': '♓'
+        };
+
+        function getZodiacData(month, day) {
+            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return { en: 'Aries', bn: 'মেষ রাশি (Aries)', p_bn: 'সিংহ, ধনু এবং তুলা রাশি', p_en: 'Leo, Sagittarius, and Libra' };
+            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return { en: 'Taurus', bn: 'বৃষ রাশি (Taurus)', p_bn: 'কন্যা, মকর এবং বৃশ্চিক রাশি', p_en: 'Virgo, Capricorn, and Scorpio' };
+            if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return { en: 'Gemini', bn: 'মিথুন রাশি (Gemini)', p_bn: 'তুলা, কুম্ভ এবং ধনু রাশি', p_en: 'Libra, Aquarius, and Sagittarius' };
+            if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return { en: 'Cancer', bn: 'কর্কট রাশি (Cancer)', p_bn: 'বৃশ্চিক, মীন এবং বৃষ রাশি', p_en: 'Scorpio, Pisces, and Taurus' };
+            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return { en: 'Leo', bn: 'সিংহ রাশি (Leo)', p_bn: 'মেষ, ধনু এবং মিথুন রাশি', p_en: 'Aries, Sagittarius, and Gemini' };
+            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return { en: 'Virgo', bn: 'কন্যা রাশি (Virgo)', p_bn: 'বৃষ, মকর এবং মীন রাশি', p_en: 'Taurus, Capricorn, and Pisces' };
+            if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return { en: 'Libra', bn: 'তুলা রাশি (Libra)', p_bn: 'মিথুন, কুম্ভ এবং মেষ রাশি', p_en: 'Gemini, Aquarius, and Aries' };
+            if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return { en: 'Scorpio', bn: 'বৃশ্চিক রাশি (Scorpio)', p_bn: 'কর্কট, মীন এবং কন্যা রাশি', p_en: 'Cancer, Pisces, and Virgo' };
+            if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return { en: 'Sagittarius', bn: 'ধনু রাশি (Sagittarius)', p_bn: 'মেষ, সিংহ এবং মিথুন রাশি', p_en: 'Aries, Leo, and Gemini' };
+            if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return { en: 'Capricorn', bn: 'মকর রাশি (Capricorn)', p_bn: 'বৃষ, কন্যা এবং কর্কট রাশি', p_en: 'Taurus, Virgo, and Cancer' };
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return { en: 'Aquarius', bn: 'কুম্ভ রাশি (Aquarius)', p_bn: 'মিথুন, তুলা এবং সিংহ রাশি', p_en: 'Gemini, Libra, and Leo' };
+            return { en: 'Pisces', bn: 'মীন রাশি (Pisces)', p_bn: 'কর্কট, বৃশ্চিক এবং বৃষ রাশি', p_en: 'Cancer, Scorpio, and Taurus' };
+        }
+
+        function reduceNum(num) {
+            while (num > 9) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function calculateChaldeanNameNumber(nameStr) {
+            let cleanName = nameStr.toUpperCase().replace(/[^A-Z]/g, '');
+            let sum = 0;
+            for (let i = 0; i < cleanName.length; i++) {
+                let char = cleanName[i];
+                sum += chaldeanLetterValues[char] || 0;
+            }
+            return sum;
+        }
+
+        // ================================================================
+        // ===== MAIN ENGINE: runNumerologyEngine() - 100% INTACT =====
+        // ================================================================
+        function runNumerologyEngine() {
+            const dobValue = document.getElementById('dob').value;
+            const gender = document.getElementById('gender').value;
+            const clientNameInput = document.getElementById('clientName').value;
+            if (!dobValue) return alert("অনুগ্রহ করে একটি সঠিক জন্মতারিখ সিলেক্ট করুন!");
+
+            const d = new Date(dobValue);
+            const day = d.getDate();
+            const month = d.getMonth() + 1;
+            const year = d.getFullYear();
+
+            const driver = reduceNum(day);
+            const conductor = reduceNum(day + month + year);
+
+            let baseYearSum = reduceNum(year);
+            let kua = (gender === 'male') ? (11 - baseYearSum) : (4 + baseYearSum);
+            kua = reduceNum(kua);
+
+            const rawDigits = (day.toString() + month.toString() + year.toString() + driver.toString() + conductor.toString() + kua.toString()).replace(/0/g, '');
+
+            const zodiacData = getZodiacData(month, day);
+            document.getElementById('zodiac-backdrop').innerHTML = zodiacIcons[zodiacData.en] || '🌟';
+
+            // GRID
+            const gridLayout = [4, 9, 2, 3, 5, 7, 8, 1, 6];
+            let gridHTML = '';
+            gridLayout.forEach(num => {
+                const matches = rawDigits.split('').filter(x => parseInt(x) === num).join('');
+                gridHTML += `<div class="cell"><div class="user-num">${matches || '-'}</div><div class="fixed-num">${num}</div></div>`;
+            });
+            document.getElementById('gridContainer').innerHTML = gridHTML;
+
+            // PILLARS
+            const props = planetProperties[driver];
+            document.getElementById('pillarsContainer').innerHTML = `
+                    <div class="metric-item"><span>Driver Number (ড্রাইভার)</span><strong>${driver}</strong></div>
+                    <div class="metric-item"><span>Conductor Number (কন্ডাক্টর)</span><strong>${conductor}</strong></div>
+                    <div class="metric-item"><span>Kua Number (কুয়া)</span><strong>${kua}</strong></div>
+                    <div class="metric-item"><span>Ruling Planet (অধিপতি গ্রহ)</span><strong>${props.planet}</strong></div>
+                    <div class="metric-item"><span>Lucky Colors (শুভ রং)</span><span class="lucky-badge">${props.color}</span></div>
+                    <div class="metric-item"><span>Lucky Days (শুভ দিন)</span><span class="lucky-badge">${props.day}</span></div>
+                    <div class="metric-item"><span>Golden Years (ভাগ্যোন্নতির বছর)</span><strong>${props.year}</strong></div>
+                `;
+
+            // NAME ANALYSIS
+            let nameAnalysisHTML = "";
+            if (clientNameInput.trim() === "") {
+                nameAnalysisHTML = `
+                        <div class="report-block" style="border-left-color: #7f8c8d;">
+                            <h3>⚠️ কোনো নাম ইনপুট করা হয়নি</h3>
+                            <div class="lang-split">
+                                <div class="bn-text">নামের প্রকৃত ভাইব, সাব-কনসাস ট্রাজেক্টোরি এবং সমাধান গাইডলাইন পেতে ইংরেজি বড় অক্ষরে নাম ইনপুট করুন।</div>
+                                <div class="en-text">Please input your name spelling in English capital letters to compute the energetic vibe and strategic letters modifications.</div>
+                            </div>
+                        </div>`;
+            } else {
+                let rawNameCompound = calculateChaldeanNameNumber(clientNameInput);
+                let singleNameNum = reduceNum(rawNameCompound);
+
+                const cleanName = clientNameInput.toUpperCase().replace(/[^A-Z]/g, '');
+                let horizontalItems = '';
+                for (let char of cleanName) {
+                    let val = chaldeanLetterValues[char] || 'N/A';
+                    horizontalItems += `
+                            <div class="letter-item">
+                                <span class="letter">${char}</span>
+                                <span class="equals">=</span>
+                                <span class="value">${val}</span>
+                            </div>
+                        `;
+                }
+
+                let driverRelations = compatibilityMatrix[driver];
+                let status_bn = "";
+                let status_en = "";
+                let advice_bn = "";
+
+                if (driverRelations.friendly.includes(singleNameNum)) {
+                    status_bn = `<span style="color: var(--success); font-weight: bold;">মিত্র বা শুভ স্তর (Highly Compatible)</span>`;
+                    status_en = `Highly Friendly Alignment Matrix`;
+                    advice_bn = "আপনার নামের বর্তমান বানানটি আপনার জন্মতারিখের প্রধান চালক শক্তির সাথে সম্পূর্ণ সামঞ্জস্যপূর্ণ। এই নামের কম্পন আপনার জীবনের বাধা দূর করতে, ব্যবসায়িক প্রসার ঘটাতে এবং মহাজাগতিক সুযোগ আকর্ষণ করতে প্রাকৃতিকভাবে সাহায্য করছে। নামের বানান পরিবর্তনের কোনো প্রয়োজন নেই।";
+                } else if (driverRelations.enemy.includes(singleNameNum)) {
+                    status_bn = `<span style="color: var(--danger); font-weight: bold;">শত্রু বা ক্ষতিকর স্তর (Incompatible)</span>`;
+                    status_en = `Antagonistic/Hostile Voids Activated`;
+                    advice_bn = "সতর্কতা! আপনার নামের বর্তমান যোগফলটি আপনার ড্রাইভার বা কন্ডাক্টরের সাথে বৈরি বা শত্রু সম্পর্ক তৈরি করছে। এটি একটি অদৃশ্য ব্লকেজ তৈরি করে, যার ফলে কঠোর পরিশ্রম করলেও শেষ মুহূর্তে কেরিয়ারে বাধা, আর্থিক অপচয় বা পারিবারিক কলহ দেখা দিতে পারে। আপনার অবিলম্বে নামের বানান সামান্য সংশোধন করা অত্যন্ত জরুরি।";
+                } else {
+                    status_bn = `<span style="color: var(--warning); font-weight: bold;">সম বা নিউট্রাল স্তর (Neutral)</span>`;
+                    status_en = `Neutral Vibrational Frequency`;
+                    advice_bn = "আপনার নামের সংখ্যাটি জন্মতারিখের সাথে কোনো শত্রুতা তৈরি করছে না, তবে এটি আপনাকে কোনো অতিরিক্ত লাক ফ্যাক্টর বা পরম রাজযোগের সুবিধাও দিচ্ছে না। জীবনকে আরও গতিশীল ও সমৃদ্ধ করতে আপনি চাইলে আপনার নামের বানানটিকে পরম শুভ মিত্র ফ্রিকোয়েন্সিতে নিয়ে যাওয়ার জন্য সংশোধন করতে পারেন।";
+                }
+
+                let vibeMeta = nameVibeDatabase[singleNameNum];
+
+                let vibeScore = 0;
+                if (driverRelations.friendly.includes(singleNameNum)) vibeScore = 85;
+                else if (driverRelations.enemy.includes(singleNameNum)) vibeScore = 25;
+                else vibeScore = 55;
+                let vibeClass = vibeScore >= 70 ? 'good' : (vibeScore >= 40 ? 'warning' : 'danger');
+
+                const feData = friendEnemyDatabase[singleNameNum];
+                let friendChips = '';
+                let enemyChips = '';
+                let neutralChips = '';
+                
+                if (feData) {
+                    feData.friends.forEach(f => {
+                        friendChips += `<span class="num-chip">${f}</span> `;
+                    });
+                    if (feData.enemies.length > 0) {
+                        feData.enemies.forEach(e => {
+                            enemyChips += `<span class="num-chip">${e}</span> `;
+                        });
+                    } else {
+                        enemyChips = `<span style="color: var(--success); font-weight: 700;">❌ কোনো শত্রু নেই (No Enemies)</span>`;
+                    }
+                    feData.neutral.forEach(n => {
+                        neutralChips += `<span class="num-chip">${n}</span> `;
+                    });
+                }
+
+                nameAnalysisHTML = `
+                        <div class="report-block" style="border-left-color: #ff9f43; background: #fffcf5;">
+                            <h3>📊 নামের বৈদিক মূল্যায়ন রিপোর্ট: ${clientNameInput.toUpperCase()}</h3>
+                            <div class="metric-item"><span>Chaldean Compound Weight (নামের মোট যৌগিক যোগফল)</span><strong>${rawNameCompound}</strong></div>
+                            <div class="metric-item"><span>Reduced Single Name Number (নামের একক শুভ সংখ্যা)</span><strong>${singleNameNum}</strong></div>
+                            <div class="metric-item"><span>Alignment Status (জন্মতারিখের সাথে সামঞ্জস্যতা)</span><strong>${status_bn}</strong></div>
+
+                            <div class="friend-enemy-box">
+                                <div class="friend-group">
+                                    <span class="label">🤝 মিত্র সংখ্যা (Friends):</span>
+                                    ${friendChips}
+                                    <span style="font-size: 12px; color: var(--text-light);">${feData ? feData.friend_desc : ''}</span>
+                                </div>
+                                <div class="enemy-group">
+                                    <span class="label">⚔️ শত্রু সংখ্যা (Enemies):</span>
+                                    ${enemyChips}
+                                    <span style="font-size: 12px; color: var(--text-light);">${feData ? feData.enemy_desc : ''}</span>
+                                </div>
+                                <div class="friend-group">
+                                    <span class="label">⚖️ নিরপেক্ষ সংখ্যা (Neutral):</span>
+                                    ${neutralChips}
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                    <span style="font-weight: bold;">🎵 Name Vibration Strength (নামের কম্পন শক্তি)</span>
+                                    <span style="font-weight: bold; font-size: 18px;">${vibeScore}%</span>
+                                </div>
+                                <div class="vibe-meter">
+                                    <div class="vibe-bar">
+                                        <div class="vibe-bar-fill ${vibeClass}" style="width: ${vibeScore}%;"></div>
+                                    </div>
+                                </div>
+                                <div style="font-size: 13px; color: #666; margin-top: 5px;">
+                                    ${vibeScore >= 70 ? '🌟 শক্তিশালী ও সামঞ্জস্যপূর্ণ কম্পন (Strong & Aligned Vibration)' :
+                                    vibeScore >= 40 ? '⚖️ মধ্যম মানের কম্পন (Moderate Vibration — Fine-tuning recommended)' :
+                                    '⚠️ দুর্বল কম্পন — সংশোধন অত্যন্ত জরুরি (Weak Vibration — Immediate correction needed)'}
+                                </div>
+                            </div>
+
+                            <div class="chaldean-dropdown">
+                                <button class="chaldean-dropdown-header" onclick="toggleChaldeanDropdown('chaldeanTableBody')">
+                                    <span>📋 অক্ষর-সংখ্যা ব্রেকডাউন (চালডিয়ান সংখ্যা তত্ত্ব অনুযায়ী)(Chaldean Letter-Value Breakdown)</span>
+                                    <span>▼</span>
+                                </button>
+                                <div class="chaldean-dropdown-body" id="chaldeanTableBody">
+                                    <div class="chaldean-table-horizontal">
+                                        ${horizontalItems}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 style="color: var(--primary); margin-top: 25px; border-bottom: 2px solid var(--border); padding-bottom: 5px;">🔮 বর্তমান নামের অন্তর্নিহিত ভাইব (Current Name Aesthetic Vibe)</h4>
+                            <div class="lang-split">
+                                <div class="bn-text"><strong>চরিত্রগত কম্পন:</strong> ${vibeMeta.vibe_bn}</div>
+                                <div class="en-text"><strong>Subconscious Trajectory:</strong> ${vibeMeta.vibe_en}</div>
+                            </div>
+
+                            <h4 style="color: var(--danger); margin-top: 25px; border-bottom: 2px solid var(--border); padding-bottom: 5px;">🛠️ গাণিতিক সংশোধন ও লাক ফ্যাক্টর গাইডলাইন (Correction & Logic Optimization)</h4>
+                            <div class="lang-split">
+                                <div class="bn-text">
+                                    <strong>বানান পরিবর্তনের বৈদিক লজিক:</strong> ${vibeMeta.fix_bn}<br><br>
+                                    <strong>কৌশলগত সমাধান:</strong> ${advice_bn}<br><br>
+                                    <em><strong>ES মেন্টরশিপ টিপস :</strong></em> নামের বানান সংশোধন করার সময় অক্ষর এমনভাবে যোগ করতে হবে যাতে চূড়ান্ত একক সংখ্যাটি আপনার গ্রিডের কোনো অনুপস্থিত সংখ্যাকে কৃত্রিম উপায়ে সম্পূর্ণভাবে রি-অ্যাক্টিভেট করে দেয়।
+                                </div>
+                                <div class="en-text">
+                                    <strong>Alphabetical Correction Logic:</strong> ${vibeMeta.fix_en}<br><br>
+                                    By adding structured phonetics, we naturally bridge missing numeric grids to activate suppressed commercial or domestic pathways, bypassing industry bottlenecks effortlessly.
+                                </div>
+                            </div>
+                        </div>`;
+            }
+            document.getElementById('nameAnalysisContainer').innerHTML = nameAnalysisHTML;
+
+            let repetitionHTML = '';
+            for (let i = 1; i <= 9; i++) {
+                const occurrences = rawDigits.split('').filter(x => parseInt(x) === i).length;
+                if (occurrences > 0) {
+                    const meta = repetitionDatabase[i];
+                    let lookupKey = occurrences > 4 ? 4 : occurrences;
+                    let finalBn = meta[lookupKey].bn;
+                    let finalEn = meta[lookupKey].en;
+
+                    if (occurrences > 4) {
+                        finalBn += ` (বিশেষ দ্রষ্টব্য: চার্টে এই সংখ্যাটি চরম মাত্রায় ৫ বার বা তার বেশি উপস্থিত থাকায় এর তীব্রতা আপনার জীবনকে এককভাবে নিয়ন্ত্রণ করছে)।`;
+                        finalEn += ` (Note: Heavy saturation of 5 or more frequencies transforms this digit into a singular dominant vector).`;
+                    }
+
+                    repetitionHTML += `
+                            <div class="report-block" style="border-left-color: ${i === 5 ? '#27ae60' : '#16a085'}; background: #fdfdfd;">
+                                <h3><span class="number-badge">${i}</span> ${meta.title_bn} (${occurrences} বার উপস্থিত)</h3>
+                                <div class="lang-split">
+                                    <div class="bn-text"><strong>বাস্তব প্রভাব:</strong> ${finalBn}</div>
+                                    <div class="en-text"><strong>Cosmic Intensity:</strong> ${finalEn}</div>
+                                </div>
+                            </div>`;
+                }
+            }
+            document.getElementById('repetitionAnalyticsContainer').innerHTML = repetitionHTML;
+
+            let specialAlertsHTML = '';
+            if (driver === conductor) {
+                specialAlertsHTML += `
+                        <div class="report-block" style="border-left-color: #9b59b6; background: #faf5ff;">
+                            <h3>🔥 বিশেষ যোগ: অভিন্ন আত্মা রাজযোগ (Mirror Soul Paradox)</h3>
+                            <div class="lang-split">
+                                <div class="bn-text"><strong>মাস্টার অডিট:</strong> আপনার ড্রাইভার এবং কন্ডাক্টর নম্বর উভয়ই অভিন্ন অর্থাৎ [${driver}]। নিউমারোলজিতে এটি অত্যন্ত শক্তিশালী যোগ। আপনার জীবনের উদ্দেশ্য এবং কর্মপদ্ধতি একই সূত্রে চালিত। আপনার ইচ্ছাশক্তি ও জেদের সামনে কোনো বাধাই স্থায়ী হতে পারে না। আপনি প্রথাগত নিয়মের বাইরে গিয়ে নিজের একক পরিশ্রমে প্রতিদ্বন্দ্বীদের পরাজিত করে সফলতা অর্জন করতে সক্ষম।</div>
+                                <div class="en-text"><strong>Master Audit:</strong> Your Driver and Conductor scores match perfectly at [${driver}]. This alignment represents singular soul intent. You possess an uncompromising operational speed, bypassing conventional struggles.</div>
+                            </div>
+                        </div>`;
+            }
+            if (specialAlertsHTML) {
+                document.getElementById('specialAlertsContainer').innerHTML = `<div class="section-title">⭐ বিশেষ বিশেষজ্ঞ ডায়াগনস্টিকস (Expert Core Anomalies)</div>` + specialAlertsHTML;
+            } else {
+                document.getElementById('specialAlertsContainer').innerHTML = '';
+            }
+
+            document.getElementById('zodiacContainer').innerHTML = `
+                    <div class="report-block" style="border-left-color: #9b59b6;">
+                        <h3>রাশিচক্র ও হাই-প্রোফাইল পার্টনারশিপ গাইড (Astro-Zodiac Matrix)</h3>
+                        <div class="lang-split">
+                            <div class="bn-text"><strong>আপনার সৌর রাশি:</strong> ${zodiacData.bn}<br><strong>সেরা লাইফ/বিজনেস পার্টনার রাশি:</strong> ${zodiacData.p_bn}।</div>
+                            <div class="en-text"><strong>Your Western Zodiac:</strong> ${zodiacData.en}<br><strong>Best Compatible Partners:</strong> ${zodiacData.p_en}.</div>
+                        </div>
+                    </div>`;
+
+            const driverData = driverDatabase[driver];
+            document.getElementById('driverDeepContainer').innerHTML = `
+                    <div class="report-block" style="border-left-color: #2c3e50;">
+                        <h3>ড্রাইভার নম্বর ${driver} ব্যক্তিত্ব এবং সেরা জীবিকা (Core Blueprint & Career Focus)</h3>
+                        <div class="lang-split">
+                            <div class="bn-text"><strong>চরিত্র ও স্বভাব:</strong> ${driverData.bn}<br><br><strong>🎯 সেরা প্রফেশনাল ক্ষেত্র:</strong> ${driverData.prof_bn}</div>
+                            <div class="en-text"><strong>Behavioral Profile:</strong> ${driverData.en}<br><br><strong>🎯 Ideal Professional Domains:</strong> ${driverData.prof_en}</div>
+                        </div>
+                    </div>`;
+
+            const roData = riskOpportunitiesDatabase[driver];
+            document.getElementById('riskOpportunitiesContainer').innerHTML = `
+                    <div class="report-block" style="border-left-color: var(--success);">
+                        <h3>🚀 ভাগ্যোন্নতির সুবর্ণ সুযোগ (Strategic Opportunities)</h3>
+                        <div class="lang-split"><div class="bn-text">${roData.opp_bn}</div><div class="en-text">${roData.opp_en}</div></div>
+                    </div>
+                    <div class="report-block" style="border-left-color: var(--danger);">
+                        <h3>⚠️ ভবিষ্যতের বড় ঝুঁকি ও নেতিবাচক দিক (Critical Risk Configurations)</h3>
+                        <div class="lang-split"><div class="bn-text">${roData.risk_bn}</div><div class="en-text">${roData.risk_en}</div></div>
+                    </div>`;
+
+            const hData = healthDatabase[driver];
+            document.getElementById('healthContainer').innerHTML = `
+                    <div class="report-block" style="border-left-color: #3498db;">
+                        <h3>🩺 সম্ভাব্য স্বাস্থ্য সমস্যা ও আয়ুর্বেদিক/লাইফস্টাইল গাইডলাইন</h3>
+                        <div class="lang-split"><div class="bn-text"><strong>শারীরিক সংবেদনশীলতা:</strong> ${hData.bn}</div><div class="en-text"><strong>Medical Vulnerabilities:</strong> ${hData.en}</div></div>
+                    </div>`;
+
+            const lifeData = masterLifeCalculations[driver];
+            document.getElementById('lifeCalculationContainer').innerHTML = `
+                    <div class="report-block" style="border-left-color: #27ae60;">
+                        <h3>জীবনযাত্রার ধাপে ধাপে কালানুক্রমিক মূল্যায়ন (Complete Strategic Life Timeline)</h3>
+                        <div class="lang-split"><div class="bn-text">${lifeData.bn}</div><div class="en-text">${lifeData.en}</div></div>
+                    </div>`;
+
+            let planesHTML = '';
+            planeMetadata.forEach(p => {
+                const missingInPlane = p.numbers.filter(n => !rawDigits.includes(n.toString()));
+                if (missingInPlane.length === 0) {
+                    planesHTML += `
+                            <div class="report-block" style="border-left-color: var(--success);">
+                                <h3>${p.name} - Status: <span style="color:var(--success);">১০০% সক্রিয় (পূর্ণাঙ্গ রাজযোগ)</span></h3>
+                                <div class="lang-split"><div class="bn-text"><strong>বাস্তব প্রভাব:</strong> ${p.full_bn}</div><div class="en-text"><strong>Cosmic Impact:</strong> ${p.full_en}</div></div>
+                            </div>`;
+                } else if (missingInPlane.length < 3) {
+                    const missingStr = missingInPlane.join(', ');
+                    let localizedBn = p.part_bn.replace('[MISSING]', missingStr);
+                    let localizedEn = p.part_en.replace('[MISSING]', missingStr);
+                    planesHTML += `
+                            <div class="report-block" style="border-left-color: var(--warning);">
+                                <h3>${p.name} - Status: <span style="color:var(--warning);">অসম্পূর্ণ রেখা</span></h3>
+                                <div class="lang-split">
+                                    <div class="bn-text"><strong>বিশ্লেষণ:</strong> ${localizedBn}<br><span style="color:var(--accent); font-weight:bold;">🛠️ ${p.remedy_bn}</span></div>
+                                    <div class="en-text"><strong>Diagnostics:</strong> ${localizedEn}<br><span style="color:var(--accent); font-weight:bold;">🛠️ ${p.remedy_en}</span></div>
+                                </div>
+                            </div>`;
+                }
+            });
+            document.getElementById('planesContainer').innerHTML = planesHTML;
+
+            document.getElementById('downloadPdfBtn').style.display = 'inline-block';
+            document.getElementById('dashboardView').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('dashboardView').offsetTop - 20, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

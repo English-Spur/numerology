@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Lo Shu, Chaldean & Kua Calculator - English Spur</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --border-clr: #cbd5e1;
+            --accent: #0ea5e9;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 26px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border-clr);
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+            background: #fff;
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary);
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+        .result-section {
+            margin-top: 30px;
+            display: none;
+        }
+        .input-display-box {
+            background: #f0fdf4;
+            border-left: 6px solid #22c55e;
+            padding: 12px 18px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            color: #166534;
+        }
+        .core-box {
+            background: #eef2ff;
+            border-left: 6px solid var(--primary);
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 360px;
+            margin: 20px auto;
+        }
+        .grid-cell {
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            border-radius: 10px;
+            color: #14532d;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .grid-cell.missing {
+            background: #fef2f2;
+            border: 2px dashed #ef4444;
+            color: #991b1b;
+            font-size: 16px;
+        }
+        .grid-cell span.count {
+            font-size: 12px;
+            font-weight: normal;
+            margin-top: 4px;
+            color: #475569;
+        }
+        .info-section {
+            margin-top: 30px;
+            background: #f8fafc;
+            padding: 20px;
+            border: 1px solid var(--border-clr);
+            border-radius: 8px;
+        }
+        .info-section h3 {
+            color: var(--primary);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+        .lang-toggle {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+        .lang-btn {
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            width: auto;
+            display: inline-block;
+        }
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        .lang-content {
+            display: none;
+        }
+        .lang-content.active {
+            display: block;
+        }
+        .plane-list {
+            list-style-type: square;
+            margin-left: 20px;
+            color: #0369a1;
+            font-weight: 600;
+        }
+        .no-plane {
+            color: #64748b;
+            font-style: italic;
+        }
+        .logic-note {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 10px 14px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #b45309;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lo Shu, Chaldean & Kua Calculator</h1>
+    <div class="subtitle">English Spur Advanced Numerology Academy (Bilingual Edition)</div>
+
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="switchLang('en')">English</button>
+        <button class="lang-btn" onclick="switchLang('bn')">বাংলা</button>
+    </div>
+
+    <div class="form-group">
+        <label id="lblDob">Enter Date of Birth [DD-MM-YYYY or YYYY-MM-DD] (জন্মতারিখ লিখুন):</label>
+        <input type="text" id="dob" placeholder="e.g., 23-09-1982 or 1982-09-23" required>
+    </div>
+
+    <div class="form-group">
+        <label id="lblGender">Select Gender (লিঙ্গ নির্বাচন করুন):</label>
+        <select id="gender">
+            <option value="male">Male (পুরুষ)</option>
+            <option value="female">Female (মহিলা)</option>
+        </select>
+    </div>
+
+    <button onclick="calculateAll()" id="btnCalculate">Calculate Complete Analysis</button>
+
+    <div class="result-section" id="resultSection">
+        <div class="input-display-box" id="inputDisplayBox"></div>
+        <div class="core-box" id="coreNumbersBox"></div>
+        
+        <!-- Kua Calculation Logic Explanation Box -->
+        <div class="logic-note" id="kuaLogicNote"></div>
+
+        <h3 style="text-align: center;" id="gridTitleHeading">Your Lo Shu Grid (3x3 Matrix)</h3>
+        <div class="grid-container" id="loShuGrid"></div>
+
+        <div class="info-section">
+            <!-- English Information -->
+            <div id="content-en" class="lang-content active">
+                <h3>Detailed Analysis & Planes</h3>
+                <p><strong>Present Numbers:</strong> <span id="enPresent"></span></p>
+                <p><strong>Missing Numbers:</strong> <span id="enMissing"></span></p>
+                <p><strong>Completed Planes & Yogs:</strong></p>
+                <ul id="enPlanes" class="plane-list"></ul>
+                
+                <h3>Chaldean Number Meanings & Core Insights</h3>
+                <ul id="enInsights"></ul>
+            </div>
+
+            <!-- Bengali Information -->
+            <div id="content-bn" class="lang-content">
+                <h3>বিস্তারিত বিশ্লেষণ ও প্লেনসমূহ</h3>
+                <p><strong>উপস্থিত সংখ্যাসমূহ:</strong> <span id="bnPresent"></span></p>
+                <p><strong>অনুপস্থিত সংখ্যাসমূহ:</strong> <span id="bnMissing"></span></p>
+                <p><strong>সম্পূর্ণ হওয়া প্লেন এবং যোগসমূহ:</strong></p>
+                <ul id="bnPlanes" class="plane-list"></ul>
+                
+                ### চালডিয়ান সংখ্যাতত্ত্বের অর্থ ও মূল তাৎপর্য
+                <ul id="bnInsights"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function sumDigits(num) {
+    while (num > 9) {
+        num = num.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+    }
+    return num;
+}
+
+function switchLang(lang) {
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.lang-content').forEach(content => content.classList.remove('active'));
+    
+    if(lang === 'en') {
+        document.querySelectorAll('.lang-btn')[0].classList.add('active');
+        document.getElementById('content-en').classList.add('active');
+    } else {
+        document.querySelectorAll('.lang-btn')[1].classList.add('active');
+        document.getElementById('content-bn').classList.add('active');
+    }
+}
+
+function parseDateInput(inputStr) {
+    inputStr = inputStr.trim();
+    let year, month, day;
+
+    if (/^\d{4}[-/]\d{1,2}[-/]\d{1,2}$/.test(inputStr)) {
+        let parts = inputStr.split(/[-/]/);
+        year = parts[0];
+        month = parts[1].padStart(2, '0');
+        day = parts[2].padStart(2, '0');
+    } else if (/^\d{1,2}[-/]\d{1,2}[-/]\d{4}$/.test(inputStr)) {
+        let parts = inputStr.split(/[-/]/);
+        day = parts[0].padStart(2, '0');
+        month = parts[1].padStart(2, '0');
+        year = parts[2];
+    } else {
+        return null;
+    }
+
+    return { year: parseInt(year), month, day };
+}
+
+// ==========================================
+// KUA NUMBER CALCULATION LOGIC (100% ACCURATE)
+// ==========================================
+function calculateKua(year, gender) {
+    // Step 1: Sum all digits of the full birth year and reduce to a single digit
+    let yearSum = year.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+    let reducedYear = sumDigits(yearSum);
+
+    let kua = 0;
+    // Step 2: Apply century & gender rules
+    if (year < 2000) {
+        if (gender === 'male') {
+            kua = 11 - reducedYear; // Male before 2000: 11 - sum
+        } else {
+            kua = 4 + reducedYear;  // Female before 2000: 4 + sum
+        }
+    } else {
+        if (gender === 'male') {
+            kua = 10 - reducedYear; // Male from 2000 onwards: 10 - sum
+        } else {
+            kua = 5 + reducedYear;  // Female from 2000 onwards: 5 + sum
+        }
+    }
+
+    // Step 3: Reduce to single digit
+    kua = sumDigits(kua);
+
+    // Step 4: Special Feng Shui rule for Kua 5
+    if (kua === 5) {
+        kua = gender === 'male' ? 2 : 8;
+    }
+    return kua;
+}
+
+function calculateAll() {
+    const dobInputVal = document.getElementById('dob').value;
+    const gender = document.getElementById('gender').value;
+
+    const parsedDate = parseDateInput(dobInputVal);
+    if (!parsedDate) {
+        alert("Please enter a valid date format (e.g., DD-MM-YYYY or YYYY-MM-DD)! / সঠিক ফরম্যাটে জন্মতারিখ লিখুন!");
+        return;
+    }
+
+    const year = parsedDate.year;
+    const month = parsedDate.month;
+    const day = parsedDate.day;
+
+    const dayNum = parseInt(day);
+    const driver = sumDigits(dayNum);
+
+    const fullDateStr = day + month + year;
+    const totalSum = fullDateStr.split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+    const conductor = sumDigits(totalSum);
+
+    const kuaNumber = calculateKua(year, gender);
+
+    let rawDigits = fullDateStr.split('').map(Number).filter(d => d !== 0);
+    rawDigits.push(driver);
+    rawDigits.push(conductor);
+    rawDigits.push(kuaNumber);
+
+    const freq = {};
+    for (let i = 1; i <= 9; i++) freq[i] = 0;
+    rawDigits.forEach(d => { if (freq[d] !== undefined) freq[d]++; });
+
+    const genderText = gender === 'male' ? 'Male (পুরুষ)' : 'Female (মহিলা)';
+    document.getElementById('inputDisplayBox').innerHTML = `
+        <strong>Input Summary / ইনপুট বিবরণ:</strong> Date of Birth: <strong>${day}-${month}-${year}</strong> | Gender: <strong>${genderText}</strong>
+    `;
+
+    document.getElementById('coreNumbersBox').innerHTML = `
+        <strong>Driver (মূলঙ্ক):</strong> ${driver} &nbsp;|&nbsp; 
+        <strong>Conductor (ভাগ্যাঙ্ক):</strong> ${conductor} &nbsp;|&nbsp;
+        <strong>Kua Number (কুয়া নম্বর):</strong> ${kuaNumber}
+    `;
+
+    // Display Kua Logic Explanation Note
+    let yearSumSample = year.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+    let reducedSample = sumDigits(yearSumSample);
+    document.getElementById('kuaLogicNote').innerHTML = `
+        <strong>Kua Calculation Logic Applied:</strong> Birth Year (${year}) digits sum = ${yearSumSample} -> Single digit = ${reducedSample}. 
+        For ${gender} (${year < 2000 ? (gender === 'male' ? '11 - sum' : '4 + sum') : (gender === 'male' ? '10 - sum' : '5 + sum')}), resulting Kua is <strong>${kuaNumber}</strong>.
+    `;
+
+    const standardLayout = [4, 9, 2, 3, 5, 7, 8, 1, 6];
+    let gridHTML = '';
+
+    standardLayout.forEach(num => {
+        const count = freq[num];
+        if (count > 0) {
+            gridHTML += `
+                <div class="grid-cell">
+                    ${num.toString().repeat(count)}
+                    <span class="count">${count} time(s)</span>
+                </div>
+            `;
+        } else {
+            gridHTML += `
+                <div class="grid-cell missing">
+                    Missing (${num})
+                    <span class="count">0</span>
+                </div>
+            `;
+        }
+    });
+
+    document.getElementById('loShuGrid').innerHTML = gridHTML;
+
+    let missingNums = [];
+    let presentNumsArr = [];
+    for (let i = 1; i <= 9; i++) {
+        if (freq[i] === 0) missingNums.push(i);
+        else presentNumsArr.push(`${i} (${freq[i]}x)`);
+    }
+
+    let planesEn = [];
+    let planesBn = [];
+
+    // Horizontal Planes
+    if(freq[4] > 0 && freq[9] > 0 && freq[2] > 0) {
+        planesEn.push("<li><strong>Mind Plane (4-9-2):</strong> Excellent memory, highly intellectual, and strong analytical skills.</li>");
+        planesBn.push("<li><strong>মাইন্ড প্লেন (৪-৯-২):</strong> চমৎকার স্মৃতিশক্তি, উচ্চ বুদ্ধিমত্তা এবং বিশ্লেষণ ক্ষমতা।</li>");
+    }
+    if(freq[3] > 0 && freq[5] > 0 && freq[7] > 0) {
+        planesEn.push("<li><strong>Emotional Plane (3-5-7):</strong> Very intuitive, emotional, spiritual, and loving nature.</li>");
+        planesBn.push("<li><strong>ইমোশনাল প্লেন (৩-৫-৭):</strong> অত্যন্ত সংবেদনশীল, আধ্যাত্মিক, আবেগপ্রবণ এবং সহানুভূতিশীল।</li>");
+    }
+    if(freq[8] > 0 && freq[1] > 0 && freq[6] > 0) {
+        planesEn.push("<li><strong>Practical Plane (8-1-6):</strong> Highly action-oriented, practical, successful in business, and wealthy.</li>");
+        planesBn.push("<li><strong>প্র্যাকটিক্যাল প্লেন (৮-১-৬):</strong> বাস্তববাদী, কর্মঠ, ব্যবসায়িক সাফল্য এবং সম্পদ অর্জনে পারদর্শী।</li>");
+    }
+
+    // Vertical Planes
+    if(freq[4] > 0 && freq[3] > 0 && freq[8] > 0) {
+        planesEn.push("<li><strong>Thought Plane (4-3-8):</strong> Great at planning, visualization, and creating strong strategies.</li>");
+        planesBn.push("<li><strong>থট প্লেন বা চিন্তা যোগ (৪-৩-৮):</strong> দুর্দান্ত পরিকল্পনা, দূরদৃষ্টি এবং স্ট্র্যাটেজি তৈরির ক্ষমতা।</li>");
+    }
+    if(freq[9] > 0 && freq[5] > 0 && freq[1] > 0) {
+        planesEn.push("<li><strong>Will Plane (9-5-1):</strong> Tremendous willpower, self-confidence, and determination to succeed.</li>");
+        planesBn.push("<li><strong>উইল প্লেন বা ইচ্ছাশক্তি যোগ (৯-৫-১):</strong> প্রবল ইচ্ছাশক্তি, আত্মবিশ্বাস এবং সাফল্যের প্রতি অদম্য জেদ।</li>");
+    }
+    if(freq[2] > 0 && freq[7] > 0 && freq[6] > 0) {
+        planesEn.push("<li><strong>Action Plane (2-7-6):</strong> Ability to execute ideas quickly, physically fit, and proactive.</li>");
+        planesBn.push("<li><strong>অ্যাকশন প্লেন বা কর্ম যোগ (২-৭-৬):</strong> দ্রুত সিদ্ধান্ত নেওয়া, শারীরিক সক্ষমতা এবং কাজে পরিণত করার ক্ষমতা।</li>");
+    }
+
+    // Diagonal Yogs
+    if(freq[4] > 0 && freq[5] > 0 && freq[6] > 0) {
+        planesEn.push("<li><strong>Golden Raj Yog (4-5-6):</strong> Super success, extreme wealth, name, fame, and highly lucky.</li>");
+        planesBn.push("<li><strong>গোল্ডেন রাজ যোগ (৪-৫-৬):</strong> বিপুল ধনসম্পদ, যশ, খ্যাতি এবং অত্যন্ত সৌভাগ্যবান।</li>");
+    }
+    if(freq[2] > 0 && freq[5] > 0 && freq[8] > 0) {
+        planesEn.push("<li><strong>Silver Rajat Yog (2-5-8):</strong> Real estate success, grounded stability, and properties.</li>");
+        planesBn.push("<li><strong>রজাত যোগ বা সিলভার যোগ (২-৫-৮):</strong> ভূ-সম্পত্তি বা রিয়েল এস্টেটে লাভ এবং জীবনে স্থায়িত্ব।</li>");
+    }
+
+    document.getElementById('enPresent').innerText = presentNumsArr.join(', ');
+    document.getElementById('enMissing').innerText = missingNums.length > 0 ? missingNums.join(', ') : 'None';
+    document.getElementById('enPlanes').innerHTML = planesEn.length > 0 ? planesEn.join("") : "<li class='no-plane'>No planes formed.</li>";
+
+    document.getElementById('bnPresent').innerText = presentNumsArr.join(', ');
+    document.getElementById('bnMissing').innerText = missingNums.length > 0 ? missingNums.join(', ') : 'কিছু নেই (সব সংখ্যা উপস্থিত)';
+    document.getElementById('bnPlanes').innerHTML = planesBn.length > 0 ? planesBn.join("") : "<li class='no-plane'>কোনো প্লেন সম্পূর্ণ হয়নি।</li>";
+
+    const insightsEn = `
+        <li><strong>Driver (${driver}):</strong> Influences your inner self, primary nature, and personal goals.</li>
+        <li><strong>Conductor (${conductor}):</strong> Governs your destiny path and life experiences.</li>
+        <li><strong>Kua (${kuaNumber}):</strong> Determines your favorable directions for success and prosperity.</li>
+    `;
+    const insightsBn = `
+        <li><strong>মূলঙ্ক বা ড্রাইভার (${driver}):</strong> আপনার অভ্যন্তরীণ স্বভাব ও ব্যক্তিগত লক্ষ্য নির্ধারণকে চালিত করে।</li>
+        <li><strong>ভাগ্যাঙ্ক বা কন্ডাক্টর (${conductor}):</strong> আপনার জীবনের সামগ্রিক ভাগ্য ও গন্তব্য নির্দেশ করে।</li>
+        <li><strong>কুয়া নম্বর (${kuaNumber}):</strong> আপনার সুস্বাস্থ্য, সম্পদ ও অনুকূল দিক নির্ধারণ করে।</li>
+    `;
+
+    document.getElementById('enInsights').innerHTML = insightsEn;
+    document.getElementById('bnInsights').innerHTML = insightsBn;
+
+    document.getElementById('resultSection').style.display = 'block';
+}
+</script>
+
+</body>
+</html>

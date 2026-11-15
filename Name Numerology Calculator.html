@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Name Numerology Calculator by Occult Science</title>
+    <meta name="description" content="A numerology calculator can help to get a better understanding of yourself. It tells you your strengths and weaknesses based on Chaldean numerology.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #F07100;
+            --primary-hover: #d46200;
+            --dark-bg: #1a1a1a;
+            --card-bg: #FFFFFF;
+            --section-bg: linear-gradient(135deg, #fff8f2, #fff);
+            --border-color: #f5c89a;
+            --text-main: #333333;
+            --text-muted: #555555;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(240, 113, 0, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #FAFAF7;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container { width: min(900px, 92%); margin: auto; padding: 50px 0; }
+        
+        .calculator-card {
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(240, 113, 0, 0.1);
+        }
+
+        .btn-calculate {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: #fff;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+
+        .btn-calculate:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Loading Pause Animation */
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .spinner {
+            width: 22px;
+            height: 22px;
+            border: 3px solid #fde8d8;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Result Section */
+        .result-box {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background: #fff5ee;
+            border-radius: var(--radius);
+            border: 1px solid #ffd5b8;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .result-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .result-item span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        /* Breakdown Box */
+        .breakdown-box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+        }
+        .breakdown-box strong { display: block; margin-bottom: 8px; color: var(--primary); }
+        .breakdown-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            background: #fff5ee;
+            border: 1px solid #f5c89a;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Chaldean Table Styling */
+        .table-container {
+            margin-top: 40px;
+            overflow-x: auto;
+        }
+
+        table.chaldean-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        table.chaldean-table th, table.chaldean-table td {
+            border: 1px solid #f0f0f0;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        table.chaldean-table th {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        table.chaldean-table td {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="calculator-card">
+        <h1>Name Numerology Calculator</h1>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">
+            Find out your Name Number (Compound and Single digit) using authentic Chaldean Numerology principles.
+        </p>
+
+        <form id="numerologyForm" onsubmit="event.preventDefault(); startCalculation();">
+            <div class="form-group">
+                <label for="fullName">Enter Full Name:</label>
+                <input type="text" id="fullName" placeholder="e.g. Sovanlal Kapri" autocomplete="off" required>
+            </div>
+
+            <button type="submit" class="btn-calculate" id="calcBtn">Calculate Numerology Number</button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div> Analyzing name vibrations & calculating frequencies...
+            </div>
+        </form>
+
+        <!-- Result Box -->
+        <div class="result-box" id="resultBox">
+            <div class="result-title">✨ Numerology Analysis Report</div>
+            
+            <div class="breakdown-box">
+                <strong>Letter-by-Letter Breakdown (Chaldean Values):</strong>
+                <div class="breakdown-tags" id="breakdownContainer"></div>
+            </div>
+
+            <div class="result-grid">
+                <div class="result-item">
+                    Compound Number (Total Sum)
+                    <span id="compoundNumber">-</span>
+                </div>
+                <div class="result-item">
+                    Single Digit (Destiny Number)
+                    <span id="singleNumber">-</span>
+                </div>
+            </div>
+            
+            <p id="numberDescription" style="font-size: 0.95rem; color: var(--text-muted);"></p>
+        </div>
+    </div>
+
+    <!-- Chaldean Table Section -->
+    <div class="calculator-card">
+        <h3 style="color: var(--primary); margin-bottom: 15px; text-align: center;">Chaldean Numerology Alphabet Table</h3>
+        <p style="text-align: center; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+            This ancient system maps letters A-Z to numbers 1 through 8 (Number 9 is considered sacred and not assigned directly to letters).
+        </p>
+        <div class="table-container">
+            <table class="chaldean-table">
+                <thead>
+                    <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A, I, J, Q, Y</td>
+                        <td>B, K, R</td>
+                        <td>C, G, L, S</td>
+                        <td>D, M, T</td>
+                        <td>E, H, N, X</td>
+                        <td>U, V, W</td>
+                        <td>O, Z</td>
+                        <td>F, P</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+const chaldeanMap = {
+    'A': 1, 'I': 1, 'J': 1, 'Q': 1, 'Y': 1,
+    'B': 2, 'K': 2, 'R': 2,
+    'C': 3, 'G': 3, 'L': 3, 'S': 3,
+    'D': 4, 'M': 4, 'T': 4,
+    'E': 5, 'H': 5, 'N': 5, 'X': 5,
+    'U': 6, 'V': 6, 'W': 6,
+    'O': 7, 'Z': 7,
+    'F': 8, 'P': 8
+};
+
+const numberMeanings = {
+    1: "Ruled by Sun. Represents leadership, ambition, originality, and strong administrative capabilities.",
+    2: "Ruled by Moon. Represents peace, cooperation, diplomacy, intuition, and artistic sensitivity.",
+    3: "Ruled by Jupiter. Represents creativity, optimism, expression, teaching, and wisdom.",
+    4: "Ruled by Rahu. Represents stability, discipline, hard work, system, and structural organization.",
+    5: "Ruled by Mercury. Represents freedom, adaptability, communication, commerce, and dynamism.",
+    6: "Ruled by Venus. Represents love, harmony, care, luxury, responsibility, and healing energy.",
+    7: "Ruled by Ketu. Represents spiritual depth, analytical thinking, wisdom, and inner research.",
+    8: "Ruled by Saturn. Represents success, power, material karma, justice, and endurance.",
+    9: "Ruled by Mars. Represents humanitarianism, universal love, completion, courage, and high energy."
+};
+
+function startCalculation() {
+    const nameInput = document.getElementById('fullName').value.trim().toUpperCase();
+    const loading = document.getElementById('loading');
+    const resultBox = document.getElementById('resultBox');
+    const calcBtn = document.getElementById('calcBtn');
+
+    if(!nameInput) return;
+
+    // Pause UI Setup (Professional look)
+    calcBtn.style.display = 'none';
+    resultBox.style.display = 'none';
+    loading.style.display = 'flex';
+
+    // Simulated 1.5 seconds professional pause
+    setTimeout(() => {
+        let compoundSum = 0;
+        let breakdownHTML = '';
+
+        for(let i = 0; i < nameInput.length; i++) {
+            const char = nameInput[i];
+            if(chaldeanMap[char]) {
+                const val = chaldeanMap[char];
+                compoundSum += val;
+                breakdownHTML += `<span class="tag"><strong>${char}</strong>: ${val}</span>`;
+            } else if(char !== ' ') {
+                breakdownHTML += `<span class="tag" style="background:#eee;"><strong>${char}</strong>: 0</span>`;
+            }
+        }
+
+        // Reduce compound number to single digit
+        let singleDigit = compoundSum;
+        while(singleDigit > 9) {
+            singleDigit = singleDigit.toString().split('').reduce((a, b) => a + Number(b), 0);
+        }
+
+        // Render Results
+        document.getElementById('breakdownContainer').innerHTML = breakdownHTML;
+        document.getElementById('compoundNumber').textContent = compoundSum;
+        document.getElementById('singleNumber').textContent = singleDigit;
+        document.getElementById('numberDescription').textContent = numberMeanings[singleDigit] || "";
+        
+        loading.style.display = 'none';
+        calcBtn.style.display = 'block';
+        resultBox.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 1500);
+}
+</script>
+
+</body>
+</html>

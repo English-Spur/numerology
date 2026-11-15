@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Professional Numerology Super App</title>
+    <meta name="description" content="Ultimate Multi-Tasking Numerology Calculator featuring Mobile Number Compatibility, Name Numerology Breakdown, Name Correction, and Best/Avoid Fields analysis.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #10b981;
+            --primary-dark: #059669;
+            --primary-light: #ecfdf5;
+            --border-green: #a7f3d0;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --card-bg: #FFFFFF;
+            --bg: #f8fafc;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(16, 185, 129, 0.08);
+            --transition: 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container { max-width: 900px; margin: auto; }
+        
+        /* App Header Tabs */
+        .app-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .app-header h1 { color: var(--text-main); font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+        .app-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #fff;
+            border: 1.5px solid var(--border-green);
+            color: var(--text-muted);
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary-green);
+            color: #fff;
+            border-color: var(--primary-green);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Tool Panels */
+        .tool-panel {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid var(--border-green);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            animation: fadeIn 0.4s ease;
+        }
+        .tool-panel.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { color: var(--primary-dark); font-size: 1.5rem; margin-bottom: 20px; font-weight: 700; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--text-main); }
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1.5px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+            background: #fff;
+        }
+        input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-dark));
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+        }
+        .btn-action:hover { transform: translateY(-2px); opacity: 0.95; }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        .spinner {
+            width: 22px; height: 22px;
+            border: 3px solid #d1d5db; border-top-color: var(--primary-green);
+            border-radius: 50%; animation: spin .8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Results Display */
+        .result-box {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            border: 1px solid var(--border-green);
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .result-item {
+            background: #fff; padding: 15px; border-radius: 10px;
+            border: 1px solid var(--border-green); text-align: center;
+        }
+        .result-item strong { display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
+        .result-item span { font-size: 1.4rem; font-weight: 800; color: var(--primary-dark); }
+
+        .breakdown-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .tag { background: #fff; border: 1px solid var(--border-green); padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; }
+
+        .info-card { background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
+        .info-card h4 { font-size: 0.95rem; margin-bottom: 5px; }
+        .friendly-text { color: #059669; font-weight: 700; }
+        .enemy-text { color: #dc2626; font-weight: 700; }
+        .best-field-text { color: #2563eb; font-weight: 700; }
+        .avoid-field-text { color: #d97706; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="app-header">
+        <h1>Multi-Tasking Numerology Suite</h1>
+        <p>Switch between Mobile Analysis, Name Calculations, and Comprehensive Career & Life Guidance.</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('nameTab', this)">Name Numerology & Correction</button>
+        <button class="tab-btn" onclick="switchTab('mobileTab', this)">Mobile Compatibility</button>
+    </div>
+
+    <!-- TAB 1: NAME & CAREER GUIDANCE APP -->
+    <div class="tool-panel active" id="nameTab">
+        <h2><i class="fa-solid fa-signature"></i> Advanced Name Analysis & Career Suite</h2>
+        <form onsubmit="event.preventDefault(); runNameAnalysis();">
+            <div class="form-group">
+                <label for="fullName">Enter Full Name:</label>
+                <input type="text" id="fullName" placeholder="e.g. Sovanlal Kapri" autocomplete="off" required>
+            </div>
+            <button type="submit" class="btn-action" id="nameBtn">Analyze Name, Career & Vibrations</button>
+            <div class="loading" id="nameLoading">
+                <div class="spinner"></div> Computing Chaldean Frequencies...
+            </div>
+        </form>
+
+        <div class="result-box" id="nameResultBox">
+            <div class="breakdown-tags" id="breakdownContainer"></div>
+            <div class="result-grid">
+                <div class="result-item">
+                    <strong>Compound Sum</strong>
+                    <span id="resCompound">-</span>
+                </div>
+                <div class="result-item">
+                    <strong>Destiny Root</strong>
+                    <span id="resSingle">-</span>
+                </div>
+            </div>
+            <div class="info-card">
+                <h4><i class="fa-solid fa-handshake"></i> Friendly Frequencies:</h4>
+                <p class="friendly-text" id="resFriendly">-</p>
+            </div>
+            <div class="info-card">
+                <h4><i class="fa-solid fa-ban"></i> Enemy Frequencies to Avoid:</h4>
+                <p class="enemy-text" id="resEnemy">-</p>
+            </div>
+            <div class="info-card">
+                <h4><i class="fa-solid fa-briefcase"></i> Best Fields / Professions:</h4>
+                <p class="best-field-text" id="resBestField">-</p>
+            </div>
+            <div class="info-card">
+                <h4><i class="fa-solid fa-triangle-exclamation"></i> Fields to Avoid:</h4>
+                <p class="avoid-field-text" id="resAvoidField">-</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: MOBILE NUMBER COMPATIBILITY APP -->
+    <div class="tool-panel" id="mobileTab">
+        <h2><i class="fa-solid fa-mobile-screen-button"></i> Mobile Number Vibration Compatibility</h2>
+        <form onsubmit="event.preventDefault(); runMobileAnalysis();">
+            <div class="form-group">
+                <label for="mobileNum">Enter 10-Digit Mobile Number:</label>
+                <input type="tel" id="mobileNum" maxlength="10" placeholder="e.g. 9876543210" required>
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Select Date of Birth:</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="btn-action" id="mobileBtn">Check Mobile Compatibility</button>
+            <div class="loading" id="mobileLoading">
+                <div class="spinner"></div> Matching Mobile Number Frequencies...
+            </div>
+        </form>
+
+        <div class="result-box" id="mobileResultBox">
+            <div class="result-grid">
+                <div class="result-item">
+                    <strong>Mobile Vibration</strong>
+                    <span id="mobDigit">-</span>
+                </div>
+                <div class="result-item">
+                    <strong>Mulank (Root)</strong>
+                    <span id="mobMulank">-</span>
+                </div>
+                <div class="result-item">
+                    <strong>Bhagyank (Destiny)</strong>
+                    <span id="mobBhagyank">-</span>
+                </div>
+            </div>
+            <div class="info-card" style="text-align: center;">
+                <h4 id="mobStatusHeading" style="font-size: 1.1rem; margin-bottom: 0;">-</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Tab Switched Logic
+function switchTab(tabId, btn) {
+    document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+}
+
+// Chaldean Data Maps
+const chaldeanMap = {
+    'A': 1, 'I': 1, 'J': 1, 'Q': 1, 'Y': 1,
+    'B': 2, 'K': 2, 'R': 2,
+    'C': 3, 'G': 3, 'L': 3, 'S': 3,
+    'D': 4, 'M': 4, 'T': 4,
+    'E': 5, 'H': 5, 'N': 5, 'X': 5,
+    'U': 6, 'V': 6, 'W': 6,
+    'O': 7, 'Z': 7,
+    'F': 8, 'P': 8
+};
+
+const numerologyData = {
+    1: { friendly: [1, 2, 3, 5, 9], enemy: [6, 8], best: "Government Administration, Leadership Roles, Politics, Management, Gold/Jewelry Business, Corporate Executive", avoid: "Subordinate desk jobs with no authority, repetitive mechanical labor, overly dependent team roles" },
+    2: { friendly: [1, 2, 3, 7, 9], enemy: [4, 8, 5], best: "Hospitality, Tourism, Liquid Business, Dairy, Public Relations, Creative Arts, Psychology, Counseling", avoid: "High-risk speculative stock trading, aggressive sales targets, rigid high-pressure technical roles" },
+    3: { friendly: [1, 2, 3, 6, 9], enemy: [5, 7, 8], best: "Education, Training/Teaching, Consulting, Law, Publishing, Financial Advisory, Public Speaking", avoid: "Monotonous data entry, isolated technical jobs without human interaction" },
+    4: { friendly: [1, 4, 5, 6, 7], enemy: [2, 8, 9], best: "IT & Software Engineering, Architecture, Scientific Research, Construction, Data Analytics, Engineering", avoid: "Unstable freelance creative gigs without structure, speculative ventures" },
+    5: { friendly: [1, 3, 5, 6, 9], enemy: [2, 4, 8], best: "Media & Journalism, Digital Marketing, Sales & Import-Export, Travel & Aviation, Stock Broking, Public Speaking", avoid: "Static desk jobs, repetitive paperwork, inflexible long-term traditional routines" },
+    6: { friendly: [3, 5, 6, 9], enemy: [1, 7, 8], best: "Luxury Goods, Fashion & Design, Hospitality, Entertainment & Media, Interior Decorating, Healthcare & Healing", avoid: "Harsh heavy machinery industries, high-conflict litigation fields" },
+    7: { friendly: [1, 2, 4, 7], enemy: [3, 6, 8, 9], best: "Occult Sciences (Astrology/Numerology), Research & Development, Writing, Philosophy, Spiritual Mentoring, Audit", avoid: "High-pressure corporate political networking, fast-paced retail sales" },
+    8: { friendly: [4, 5, 6, 8], enemy: [1, 2, 9], best: "Real Estate, Large Scale Industrial Manufacturing, Heavy Machinery, Corporate Law, Oil & Gas, Asset Management", avoid: "Quick short-term get-rich-quick schemes, fragile micro-enterprises" },
+    9: { friendly: [1, 2, 3, 5, 6, 9], enemy: [4, 7, 8], best: "Defense Services, Medical & Surgery, Social Work, NGO Management, Sports, Real Estate Development", avoid: "Passive back-office clerical jobs, isolation-heavy administrative roles" }
+};
+
+function reduceNum(num) {
+    while(num > 9) {
+        num = num.toString().split('').reduce((a, b) => a + Number(b), 0);
+    }
+    return num;
+}
+
+// Name & Career Analysis
+function runNameAnalysis() {
+    const name = document.getElementById('fullName').value.trim().toUpperCase();
+    if(!name) return;
+
+    document.getElementById('nameBtn').style.display = 'none';
+    document.getElementById('nameResultBox').style.display = 'none';
+    document.getElementById('nameLoading').style.display = 'flex';
+
+    setTimeout(() => {
+        let compound = 0;
+        let tags = '';
+        for(let i = 0; i < name.length; i++) {
+            const char = name[i];
+            if(chaldeanMap[char]) {
+                const val = chaldeanMap[char];
+                compound += val;
+                tags += `<span class="tag"><strong>${char}</strong>: ${val}</span>`;
+            }
+        }
+        const single = reduceNum(compound);
+        const data = numerologyData[single] || { friendly: [], enemy: [], best: "", avoid: "" };
+
+        document.getElementById('breakdownContainer').innerHTML = tags;
+        document.getElementById('resCompound').textContent = compound;
+        document.getElementById('resSingle').textContent = single;
+        document.getElementById('resFriendly').textContent = data.friendly.join(', ');
+        document.getElementById('resEnemy').textContent = data.enemy.join(', ');
+        document.getElementById('resBestField').textContent = data.best;
+        document.getElementById('resAvoidField').textContent = data.avoid;
+
+        document.getElementById('nameLoading').style.display = 'none';
+        document.getElementById('nameBtn').style.display = 'block';
+        document.getElementById('nameResultBox').style.display = 'block';
+    }, 1200);
+}
+
+// Mobile Compatibility Analysis
+function runMobileAnalysis() {
+    const mob = document.getElementById('mobileNum').value.trim();
+    const dob = document.getElementById('birthDate').value;
+    if(mob.length !== 10 || !dob) {
+        alert("Please enter a valid 10-digit mobile number and date of birth.");
+        return;
+    }
+
+    document.getElementById('mobileBtn').style.display = 'none';
+    document.getElementById('mobileResultBox').style.display = 'none';
+    document.getElementById('mobileLoading').style.display = 'flex';
+
+    setTimeout(() => {
+        const mobSum = mob.split('').reduce((a, b) => a + Number(b), 0);
+        const mobDigit = reduceNum(mobSum);
+        
+        const mulank = reduceNum(parseInt(dob.split('-')[2], 10));
+        const bhagyank = reduceNum(dob.replaceAll('-', '').split('').reduce((a,b)=>a+Number(b),0));
+
+        const mulankFriendly = numerologyData[mulank]?.friendly.includes(mobDigit);
+        const bhagyankFriendly = numerologyData[bhagyank]?.friendly.includes(mobDigit);
+        const isCompatible = mulankFriendly || bhagyankFriendly;
+
+        document.getElementById('mobDigit').textContent = mobDigit;
+        document.getElementById('mobMulank').textContent = mulank;
+        document.getElementById('mobBhagyank').textContent = bhagyank;
+
+        const heading = document.getElementById('mobStatusHeading');
+        if(isCompatible) {
+            heading.innerHTML = `<span style="color:#059669;"><i class="fa-solid fa-circle-check"></i> Favorable Mobile Compatibility Match!</span>`;
+        } else {
+            heading.innerHTML = `<span style="color:#dc2626;"><i class="fa-solid fa-triangle-exclamation"></i> Neutral or Challenging Frequency Match</span>`;
+        }
+
+        document.getElementById('mobileLoading').style.display = 'none';
+        document.getElementById('mobileBtn').style.display = 'block';
+        document.getElementById('mobileResultBox').style.display = 'block';
+    }, 1200);
+}
+</script>
+
+</body>
+</html>
